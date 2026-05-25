@@ -1,35 +1,34 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
-const PROTECTED_ROUTES = ['/dashboard', '/admin', '/profile'];
+import { NextRequest } from 'next/dist/server/web/spec-extension/request';
 
+import { buildLoginRedirect, getSessionToken } from './app/helpers/auth/authHelpers';
+import { NextResponse } from 'next/dist/server/web/spec-extension/response';
+import { PROTECTED_ROUTES } from './app/constantsGlobals';
+
+/**
+ * Verifica que las rutas protegidas tengan una cookie de sesión.
+ * Si no hay sesión activa, redirige a /login preservando la ruta original.
+ */
 export function proxy(request: NextRequest) {
-console.error('Proxy ejecutado para:', request.nextUrl.pathname);
   const { pathname } = request.nextUrl;
-  const token = request.cookies.get('session_token')?.value;
 
-  const isProtected = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
+  if (!PROTECTED_ROUTES.some(route => pathname.startsWith(route))) {
+    return NextResponse.next();
+  }
 
-  if (isProtected && !token) {
-    const loginUrl = new URL('/login', request.url);
-    // Guardamos la ruta original para redirigir al usuario tras el login exitoso
-    loginUrl.searchParams.set('callbackUrl', pathname); 
-    return NextResponse.redirect(loginUrl);
+  const token = getSessionToken(request);
+
+  if (!token) {
+    return buildLoginRedirect(request, pathname);
   }
 
   return NextResponse.next();
 }
 
-//El Matcher optimiza el rendimiento ejecutando el código SOLO en las páginas
+// ─── Matcher ─────────────────────────────────────────────────
+/** Ejecuta el middleware solo en páginas, excluyendo assets estáticos y APIs */
 export const config = {
   matcher: [
-    /*
-     * Coincide con todas las rutas excepto:
-     * - api (rutas de API)
-     * - _next/static (archivos estáticos)
-     * - _next/image (optimización de imágenes)
-     * - favicon.ico, sitemap.xml, robots.txt (archivos de SEO)
-     */
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
