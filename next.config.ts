@@ -15,6 +15,9 @@ const cspHeader = `
 
 
 const nextConfig: NextConfig = {
+  // Habilita rutas tipadas para mayor seguridad de tipos en enlaces y navegación
+  typedRoutes: true, 
+  
   // En Next.js 13.5+ viene habilitado por defecto, pero forzarlo previene comportamientos inseguros en componentes React
   reactStrictMode: true, 
 
