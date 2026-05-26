@@ -1,17 +1,20 @@
 "use client";
 
 import { BrandLogo } from "@/app/components/shared/brandLogo";
-
-import ThemeToggle from "@/app/components/shared/toggleTheme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
 import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams";
+import { applyTheme } from "@/app/helpers/theme/themeHelpers";
 
 export default function HomePage() {
-    const { logoUrl, welcomeTitle } = useHomeQueryParams();
+  const { logoUrl, welcomeTitle, theme } = useHomeQueryParams();
 
-    const [name, setName] = useState("");
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  const [name, setName] = useState("");
 
     const handleStart = () => {
         if (name.trim().length > 0) {
@@ -63,8 +66,6 @@ export default function HomePage() {
                     Comenzar
                 </PrimaryButton>
             </footer>
-
-            <ThemeToggle />
         </div>
     );
 }

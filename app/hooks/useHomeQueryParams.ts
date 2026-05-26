@@ -6,7 +6,7 @@ import { getLogoUrl } from "@/app/helpers/assets/getAssetPath";
 import { QUERY_PARAM_KEYS, WELCOME_TITLES } from "./constantsHooks";
 
 
-const viewConfigs: Record<string, Omit<HomeQueryParamsResult, "logoUrl">> = {
+const viewConfigs: Record<string, Pick<HomeQueryParamsResult, "welcomeTitle">> = {
   [VIEW_OPTIONS.elektraLoan]: {
     welcomeTitle: WELCOME_TITLES.elektraLoan,
   },
@@ -17,7 +17,7 @@ const viewConfigs: Record<string, Omit<HomeQueryParamsResult, "logoUrl">> = {
 
 function getViewConfig(
   config: string | null,
-): Omit<HomeQueryParamsResult, "logoUrl"> {
+): Pick<HomeQueryParamsResult, "welcomeTitle"> {
   if (config && config in viewConfigs) {
     return viewConfigs[config];
   }
@@ -30,10 +30,10 @@ export function useHomeQueryParams(): HomeQueryParamsResult {
   const configView = searchParams.get(QUERY_PARAM_KEYS.VIEW) || VIEW_OPTIONS.elektraLoan;
   const theme = searchParams.get(QUERY_PARAM_KEYS.THEME) || THEMES.LIGHT;
 
-  console.log('logourl', getLogoUrl(configView, theme));
 
   return {
     ...getViewConfig(configView),
     logoUrl: getLogoUrl(configView, theme),
+    theme,
   };
 }
