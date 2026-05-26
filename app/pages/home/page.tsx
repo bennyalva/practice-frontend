@@ -1,14 +1,15 @@
 "use client";
 
 import { BrandLogo } from "@/app/components/shared/brandLogo";
-import { useHomeView } from "@/app/hooks/useHomeView";
+
 import ThemeToggle from "@/app/components/shared/toggleTheme";
 import { useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
+import { useHomeQueryParams } from "@/app/hooks/useHomeView";
 
 export default function HomePage() {
-    const { logoUrl, welcomeTitle } = useHomeView();
+    const { logoUrl, welcomeTitle } = useHomeQueryParams();
 
     const [name, setName] = useState("");
 

@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { ViewOptions } from "@/app/constantsGlobals";
 
-const viewConfigs: Record<string, HomeViewResult> = {
+const viewConfigs: Record<string, HomeQueryParamsResult> = {
   [ViewOptions.elektraLoan]: {
     logoUrl: "/images/pages/home/elecktraLight.png",
     welcomeTitle: "¡Te damos la bienvenida a Préstamo Elektra!",
@@ -16,7 +16,7 @@ const viewConfigs: Record<string, HomeViewResult> = {
 };
 
 
-function getViewConfig(config: string | null): HomeViewResult {
+function getViewConfig(config: string | null): HomeQueryParamsResult {
   if (config && config in viewConfigs) {
     return viewConfigs[config];
   }
@@ -25,7 +25,7 @@ function getViewConfig(config: string | null): HomeViewResult {
 
 
 
-export function useHomeView(): HomeViewResult {
+export function useHomeQueryParams(): HomeQueryParamsResult {
   const searchParams = useSearchParams();
 
   const configView = searchParams.get("num") || ViewOptions.elektraLoan;
