@@ -11,8 +11,8 @@ export const SESSION_NAMES = {
 };
 
 export const ViewOptions = {
-    one: '1',
-    two: '2',
+    shopinbaz: '1',
+    elektraLoan: '2',
 };
 
 export const PROTECTED_ROUTES = [ROUTES.DASHBOARD, ROUTES.ADMIN, ROUTES.PROFILE];

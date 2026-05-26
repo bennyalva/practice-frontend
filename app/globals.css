@@ -1,23 +1,52 @@
 @import "tailwindcss";
 
 @theme {
-  /* Registramos variables de color dinámicas vinculadas a CSS tradicional */
-  --color-background-app: var(--bg-app);
-  --color-text-app: var(--text-app);
-  --color-primary-app: var(--primary-app);
+  /* Al quitar la palabra 'bg' del nombre de la variable, Tailwind v4 generará 'bg-app' */
+  --color-app: var(--bg-app); 
+  
+  /* Al quitar la palabra 'text' del nombre de la variable, generará 'text-primary' */
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  
+  /* Generará text-brand-color o bg-brand-color según lo uses */
+  --color-brand-color: var(--brand-color);
+  
+  /* Al quitar 'input' del nombre, generará 'bg-cards' o 'border-cards' */
+  --color-cards: var(--input-cards);
+  --color-border: var(--input-border);
+  
+  /* Botones */
+  --color-disabled-bg: var(--btn-disabled-bg);
+  --color-disabled-text: var(--btn-disabled);
+  --color-active-bg: var(--btn-active-bg);
+  --color-active-text: var(--btn-active-text);
 }
 
-/* ── TEMA CLARO (Por defecto) ── */
+/* El resto de tus bloques :root y .dark se quedan exactamente igual */
 :root {
-  --bg-app: #ffffff;
-  --text-app: #111827;
-  --primary-app: #3b82f6;
+  --bg-app: #F9F9F9;
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --brand-color: #D12016;
+  --input-cards: #FFFFFF;
+  --input-border: #E0E0E0;
+  --btn-disabled-bg: #E0E0E0;
+  --btn-disabled-text: #A0A0A0;
+  --btn-active-bg: #272725;
+  --btn-active-text: #FFFFFF;
 }
 
-/* ── TEMA OSCURO (Activado por clase .dark en el HTML) ── */
 .dark {
-  --bg-app: #0f172a;
-  --text-app: #f9fafb;
-  --primary-app: #60a5fa;
-}
+  --bg-app: #121212;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --brand-color: #E1251B;
+  --input-cards: #1E1E1E;
+  --input-border: #333333;
 
+  
+  --btn-disabled-bg: #404040;
+  --btn-disabled-text: #808080;
+  --btn-active-bg: #e6e6e4;
+  --btn-active-text: #000000;
+}

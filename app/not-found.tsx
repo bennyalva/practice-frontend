@@ -5,11 +5,10 @@ export default function NotFound() {
     <main  className="fixed inset-0 flex flex-col items-center justify-center bg-black">
         <h2 className='font-bold text-xl text-white'>Página no encontrada</h2>
         <nav>
-      {/* Tu bloque de Link va aquí adentro */}
       <Link
         href={{
           pathname: ROUTES.HOME,
-          query: { num: ViewOptions.one },
+          query: { num: ViewOptions.elektraLoan },
         }}
         className="text-blue-500 hover:underline text-lg"
       >
