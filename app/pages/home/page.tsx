@@ -1,9 +1,7 @@
-interface Props {
-  // En React 19 / Next.js 15, searchParams es una promesa que resuelve un objeto
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
+import { HomeProps } from "../interfacesPages";
 
-export default async function HomePage({ searchParams }: Props) {
+
+export default async function HomePage({ searchParams }: HomeProps) {
   const resolvedParams = await searchParams;
   const numParam = resolvedParams.num;
 
