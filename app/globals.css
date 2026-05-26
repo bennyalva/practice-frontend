@@ -1,17 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  /* Al quitar la palabra 'bg' del nombre de la variable, Tailwind v4 generará 'bg-app' */
+  /* se quita la primer palabra de cada variable para que no se repita
+    por la configuracion que tiene tailwind entonces 
+    --color-app: var(--bg-app); quedaria para su uso como:
+     "bg-app" clase css para el fondo de la app, y asi con las demas variables
+    */
   --color-app: var(--bg-app); 
-  
-  /* Al quitar la palabra 'text' del nombre de la variable, generará 'text-primary' */
   --color-primary: var(--text-primary);
   --color-secondary: var(--text-secondary);
-  
-  /* Generará text-brand-color o bg-brand-color según lo uses */
   --color-brand-color: var(--brand-color);
   
-  /* Al quitar 'input' del nombre, generará 'bg-cards' o 'border-cards' */
   --color-cards: var(--input-cards);
   --color-border: var(--input-border);
   
@@ -19,10 +18,11 @@
   --color-disabled-bg: var(--btn-disabled-bg);
   --color-disabled-text: var(--btn-disabled);
   --color-active-bg: var(--btn-active-bg);
+  --color-active-bg-hover: var(--btn-active-bg-hover);
   --color-active-text: var(--btn-active-text);
 }
 
-/* El resto de tus bloques :root y .dark se quedan exactamente igual */
+
 :root {
   --bg-app: #F9F9F9;
   --text-primary: #1A1A1A;
@@ -33,6 +33,7 @@
   --btn-disabled-bg: #E0E0E0;
   --btn-disabled-text: #A0A0A0;
   --btn-active-bg: #272725;
+  --btn-active-bg-hover: #3d3d3b;
   --btn-active-text: #FFFFFF;
 }
 
@@ -45,8 +46,9 @@
   --input-border: #333333;
 
   
-  --btn-disabled-bg: #404040;
-  --btn-disabled-text: #808080;
+  --btn-disabled-bg: #666464;
+  --btn-disabled-text: #928383;
   --btn-active-bg: #e6e6e4;
+  --btn-active-bg-hover: #cfcfcd;
   --btn-active-text: #000000;
 }
