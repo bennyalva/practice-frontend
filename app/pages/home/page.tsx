@@ -6,7 +6,7 @@ import ThemeToggle from "@/app/components/shared/toggleTheme";
 import { useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
-import { useHomeQueryParams } from "@/app/hooks/useHomeView";
+import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams";
 
 export default function HomePage() {
     const { logoUrl, welcomeTitle } = useHomeQueryParams();
