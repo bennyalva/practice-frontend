@@ -1,41 +1,32 @@
 "use client";
 
 import { BrandLogo } from "@/app/components/shared/brandLogo";
-import { use } from "react";
-import { HomeProps } from "../interfacesPages";
+import { useHomeView } from "@/app/hooks/useHomeView";
 import ThemeToggle from "@/app/components/shared/toggleTheme";
 import { useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
 
+export default function HomePage() {
+    const { logoUrl, welcomeTitle } = useHomeView();
 
-export default function HomePage({ searchParams }: HomeProps) {
-    const resolvedParams = use(searchParams);
-    const numParam = resolvedParams.num;
+    const [name, setName] = useState("");
 
-    // Sanitizar y validar el parámetro 
-    let numValue: number | null = typeof numParam === 'string' ? parseInt(numParam, 10) : null;
-
-    // Ejemplo de validación: si 'num' no es un número válido o no se envía, manejamos el caso
-    if (numValue === null || isNaN(numValue)) {
-        numValue = 1;
-    }
-    const [name, setName] = useState('');
     const handleStart = () => {
         if (name.trim().length > 0) {
-            console.log("Iniciando solicitud para:", name);
+            console.log("Iniciando solicitud para:", name, "| view num:");
         }
     };
 
-    const logoUrl = "/images/pages/home/elecktraLight.png";
-    const welcomeTitle = "¡Te damos la bienvenida a Préstamo Elektra!";
-
     return (
-        <div className="min-h-screen w-full flex flex-col justify-between items-center 
-                      bg-app px-6 py-4 transition-colors duration-300">
+        <div
+            className="min-h-screen w-full flex flex-col justify-between items-center
+                      bg-app px-6 py-4 transition-colors duration-300"
+        >
             <header className="w-full max-w-md">
-                <BrandLogo logoUrl={logoUrl} altText="Logo Elektra" />
+                <BrandLogo logoUrl={logoUrl} altText="Logo" />
             </header>
+
             <main className="w-full max-w-md flex-1 flex flex-col items-center justify-center text-center my-4">
                 <div className="w-full max-w-[240px] aspect-[4/3] mb-8 flex justify-center items-center">
                     <img
@@ -50,8 +41,7 @@ export default function HomePage({ searchParams }: HomeProps) {
                 </h1>
 
                 <p className="text-sm mt-3 px-6 text-secondary font-normal">
-                    Usa tu préstamo como dinero en efectivo o compra en donde quieras.
-                </p>
+                    Usa tu préstamo como dinero en efectivo o compra en donde quieras.                </p>
 
                 <div className="w-full px-4 mt-4">
                     <InputField
@@ -62,8 +52,8 @@ export default function HomePage({ searchParams }: HomeProps) {
                         placeholder="Escribe tu nombre"
                     />
                 </div>
-
             </main>
+
             <footer className="w-full max-w-md pb-6 pt-2">
                 <PrimaryButton
                     onClick={handleStart}
@@ -72,6 +62,7 @@ export default function HomePage({ searchParams }: HomeProps) {
                     Comenzar
                 </PrimaryButton>
             </footer>
+
             <ThemeToggle />
         </div>
     );
