@@ -1,38 +1,39 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { ViewOptions } from "@/app/constantsGlobals";
+import { THEMES, VIEW_OPTIONS } from "@/app/constantsGlobals";
+import { getLogoUrl } from "@/app/helpers/assets/getAssetPath";
+import { QUERY_PARAM_KEYS, WELCOME_TITLES } from "./constantsHooks";
 
-const viewConfigs: Record<string, HomeQueryParamsResult> = {
-  [ViewOptions.elektraLoan]: {
-    logoUrl: "/images/pages/home/elecktraLight.png",
-    welcomeTitle: "¡Te damos la bienvenida a Préstamo Elektra!",
+
+const viewConfigs: Record<string, Omit<HomeQueryParamsResult, "logoUrl">> = {
+  [VIEW_OPTIONS.elektraLoan]: {
+    welcomeTitle: WELCOME_TITLES.elektraLoan,
   },
-  [ViewOptions.shopinbaz]: {
-    logoUrl: "/images/pages/home/shopinbazLight.png",
-    welcomeTitle: "¡Te damos la bienvenida a Shopinbaz!",
-
+  [VIEW_OPTIONS.shopinbaz]: {
+    welcomeTitle: WELCOME_TITLES.shopinbaz,
   },
 };
 
-
-function getViewConfig(config: string | null): HomeQueryParamsResult {
+function getViewConfig(
+  config: string | null,
+): Omit<HomeQueryParamsResult, "logoUrl"> {
   if (config && config in viewConfigs) {
     return viewConfigs[config];
   }
-  return viewConfigs[ViewOptions.elektraLoan];
+  return viewConfigs[VIEW_OPTIONS.elektraLoan];
 }
-
-
 
 export function useHomeQueryParams(): HomeQueryParamsResult {
   const searchParams = useSearchParams();
 
-  const configView = searchParams.get("num") || ViewOptions.elektraLoan;
-  //const view = searchParams.get("view");
-;
+  const configView = searchParams.get(QUERY_PARAM_KEYS.VIEW) || VIEW_OPTIONS.elektraLoan;
+  const theme = searchParams.get(QUERY_PARAM_KEYS.THEME) || THEMES.LIGHT;
+
+  console.log('logourl', getLogoUrl(configView, theme));
 
   return {
     ...getViewConfig(configView),
+    logoUrl: getLogoUrl(configView, theme),
   };
 }
