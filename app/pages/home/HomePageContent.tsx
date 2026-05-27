@@ -9,6 +9,7 @@ import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryP
 import { applyTheme } from "@/app/helpers/theme/themeHelpers";
 import { ASSETS_PATHS, VALIDATION } from "@/app/constantsGlobals";
 import { useModal } from "@/app/hooks/useModal/useModal";
+import { pushToDataLayer } from "@/app/libs/gtm/gtm";
 
 export function HomePageContent() {
     const { logoUrl, welcomeTitle, theme, colorTitle } = useHomeQueryParams();
@@ -20,7 +21,20 @@ export function HomePageContent() {
     const [name, setName] = useState("");
     const { modal, showInfo, showByError, closeModal } = useModal();
 
+    const handleNameChange = (value: string) => {
+        setName(value);
+        pushToDataLayer({
+            event: "name_input",
+            value,
+        });
+    };
+
     const handleStart = () => {
+        pushToDataLayer({
+            event: "name_submitted",
+            name,
+            name_length: name.trim().length,
+        });
         showInfo("¡Nombre registrado!", `Has ingresado: ${name}`);
     };
 
@@ -55,7 +69,7 @@ export function HomePageContent() {
                         <InputField
                             label="¿Cómo prefieres que te llamemos?"
                             value={name}
-                            onChange={setName}
+                            onChange={handleNameChange}
                             maxLength={15}
                             placeholder="Escribe o dicta tu nombre..."
                             onSpeechError={showByError}

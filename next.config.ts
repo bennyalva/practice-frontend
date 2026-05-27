@@ -2,10 +2,11 @@ import type { NextConfig } from "next";
 
 const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' blob: data:;
+  img-src 'self' blob: data: https://www.google-analytics.com https://*.google-analytics.com;
   font-src 'self';
+  connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
@@ -16,13 +17,13 @@ const cspHeader = `
 
 const nextConfig: NextConfig = {
   // Habilita rutas tipadas para mayor seguridad de tipos en enlaces y navegación
-  typedRoutes: true, 
-  
+  typedRoutes: true,
+
   // En Next.js 13.5+ viene habilitado por defecto, pero forzarlo previene comportamientos inseguros en componentes React
-  reactStrictMode: true, 
+  reactStrictMode: true,
 
   // Deshabilita el encabezado que expone que estás usando Next.js para mitigar el reconocimiento de huella tecnológica (Fingerprinting)
-  poweredByHeader: false, 
+  poweredByHeader: false,
 
   // Inyección de Cabeceras de Seguridad HTTP obligatorias
   async headers() {
