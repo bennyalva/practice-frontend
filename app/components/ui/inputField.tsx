@@ -1,4 +1,3 @@
-import React from 'react';
 import { InputFieldProps } from '../interfacesComponents';
 
 export const InputField = ({
