@@ -6,7 +6,7 @@ import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
 import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryParams";
 import { applyTheme } from "@/app/helpers/theme/themeHelpers";
-import { ASSETS_PATHS } from "@/app/constantsGlobals";
+import { ASSETS_PATHS, VALIDATION } from "@/app/constantsGlobals";
 
 export default function HomePage() {
     const { logoUrl, welcomeTitle, theme, colorTitle } = useHomeQueryParams();
@@ -61,7 +61,7 @@ export default function HomePage() {
             <footer className="w-full max-w-md pb-6 pt-2">
                 <PrimaryButton
                     onClick={handleStart}
-                    disabled={name.trim().length <= 3}
+                    disabled={name.trim().length < VALIDATION.NAME_MIN_LENGTH}
                 >
                     Comenzar
                 </PrimaryButton>

@@ -35,14 +35,14 @@ export function useSpeechRecognition({
     recognition.onresult = (event: any) => {
       const speechToText = event.results[0][0].transcript;
       onResultRef.current(speechToText.slice(0, maxLengthRef.current));
+
     };
 
     recognition.onerror = (event: any) => {
-      // Manejo silencioso y elegante para acciones comunes del usuario
+
       if (event.error === REOGNICTION_ERRORS.NOT_ALLOWED) {
         console.warn("Permiso de micrófono denegado o ventana cerrada por el usuario.");
         // Opcional: Aquí podrías setear un estado para mostrar un mensaje sutil en la UI
-        // setPermissionDenied(true);
         setIsListening(false);
         return; // Frenamos la ejecución aquí para que no salte el console.error
       }
