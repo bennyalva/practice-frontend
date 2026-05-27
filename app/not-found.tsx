@@ -8,7 +8,7 @@ export default function NotFound() {
         <Link
           href={{
             pathname: ROUTES.HOME,
-            query: { num: VIEW_OPTIONS.elektraLoan },
+            query: { num: VIEW_OPTIONS.ELEKTRA_LOAN },
           }}
           className="text-blue-500 hover:underline text-lg"
         >

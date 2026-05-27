@@ -1,32 +1,102 @@
-import React from 'react';
-import { InputFieldProps } from '../interfacesComponents';
+"use client";
+
+import { InputFieldProps } from "../interfacesComponents";
+import { useSpeechRecognition } from "@/app/hooks/useSpeechRecognition/useSpeechRecognition";
+import SpeechIcon from "@/app/components/shared/icons/speechIcon";
+import { useEffect, useState } from "react";
+import { VALIDATION } from "@/app/constantsGlobals";
 
 export const InputField = ({
   label,
   value,
   onChange,
-  maxLength = 15,
-  placeholder = "Escribe tu nombre"
+  maxLength,
+  placeholder,
+  onSpeechError,
 }: InputFieldProps) => {
+  const [draft, setDraft] = useState(value);
+  const [error, setError] = useState<string | null>(null);
+
+  // Sync internal draft when parent pushes a new value (voice commit, reset)
+  useEffect(() => {
+    setDraft(value);
+  }, [value]);
+
+  const validateAndCommit = (raw: string) => {
+    const trimmed = raw.trim();
+    setDraft(trimmed);
+    if (trimmed.length < VALIDATION.NAME_MIN_LENGTH) {
+      setError(`Mínimo ${VALIDATION.NAME_MIN_LENGTH} caracteres`);
+    } else {
+      setError(null);
+    }
+    onChange(trimmed);
+  };
+
+  const { isListening, hasSupport, toggleListening } = useSpeechRecognition({
+    onResult: (speechValue) => {
+      setDraft(speechValue);
+      validateAndCommit(speechValue);
+    },
+    onError: onSpeechError,
+    maxLength,
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDraft(e.target.value);
+    if (error) setError(null);
+  };
+
+  const handleBlur = () => {
+    validateAndCommit(draft);
+  };
+
   return (
     <div className="w-full flex flex-col gap-2 my-6">
-      <label className="text-lg font-medium text-center text-primary" htmlFor="name-input">
+      <label
+        className="text-lg font-medium text-center text-primary"
+        htmlFor="name-input"
+      >
         {label}
       </label>
-      <input
-        id="name-input"
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        maxLength={maxLength}
-        placeholder={placeholder}
-        className="w-full bg-cards border-b-2 border-border 
-                   py-2 px-1 text-center text-xl focus:outline-none focus:border-brand-color 
-                   text-primary transition-colors duration-200"
-      />
-      <span className="text-right text-xs text-secondary mt-1">
-        {value.length}/{maxLength} caracteres
-      </span>
+
+      <div className="relative w-full flex items-center">
+        <input
+          id="name-input"
+          type="text"
+          value={draft}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          maxLength={maxLength}
+          placeholder={placeholder}
+          autoComplete="off"
+          className={`w-full bg-cards border-b-2 py-2 pl-2 pr-10 text-center text-xl focus:outline-none focus:border-brand-color text-primary transition-colors duration-200 ${error ? "border-red-500" : "border-border"
+            }`}
+        />
+
+        {hasSupport && (
+          <button
+            type="button"
+            onClick={toggleListening}
+            className={`absolute right-2 p-1 rounded-full transition-all duration-200 ${isListening
+              ? "text-red-500 scale-110 animate-pulse"
+              : "text-secondary hover:text-primary"
+              }`}
+            title="Dictar por voz"
+          >
+            <SpeechIcon listening={isListening} />
+          </button>
+        )}
+      </div>
+
+      <div className="flex justify-between items-center mt-1">
+        <span className="text-xs text-red-500">
+          {error}
+        </span>
+        <span className="text-xs text-secondary">
+          {draft.length}/{maxLength} caracteres
+        </span>
+      </div>
     </div>
   );
 };

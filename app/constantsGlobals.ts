@@ -1,15 +1,16 @@
 import { prependOnceListener } from "process";
+import { MODAL_TYPE, ModalType } from "./hooks/interfacesHooks";
 
 export const ROUTES = {
-  HOME: '/pages/home',
-  DASHBOARD: '/dashboard',  
-  ADMIN: '/admin',
-  PROFILE: '/profile',
-  LOGIN: '/login',
+    HOME: '/pages/home',
+    DASHBOARD: '/dashboard',
+    ADMIN: '/admin',
+    PROFILE: '/profile',
+    LOGIN: '/login',
 };
 
 export const SESSION_NAMES = {
-  TOKEN: 'session_token',
+    TOKEN: 'session_token',
 };
 
 export const VIEW_OPTIONS = {
@@ -24,7 +25,7 @@ export const THEMES = {
 
 export const ASSETS_PATHS = {
     LOGOS: {
-        ELEKTRA_LIGHT: '/images/pages/home/elecktraLight.png',  
+        ELEKTRA_LIGHT: '/images/pages/home/elecktraLight.png',
         SHOPINBAZ_LIGHT: '/images/pages/home/shopinbazLight.png',
         ELEKTRA_DARK: '/images/pages/home/elecktraDark.png',
         SHOPINBAZ_DARK: '/images/pages/home/shopingbazDark.png',
@@ -34,5 +35,22 @@ export const ASSETS_PATHS = {
     }
 };
 
+export const VALIDATION = {
+    NAME_MIN_LENGTH: 4,
+};
+
 export const PROTECTED_ROUTES = [ROUTES.DASHBOARD, ROUTES.ADMIN, ROUTES.PROFILE];
+
+export const TITLE_ERROR_GENERIC = {
+    ERROR: "Error",
+    WARNING: "Aviso",
+}
+
+export const INITIAL_MODAL: { isOpen: boolean; type: ModalType; title: string; message: string } = {
+    isOpen: false,
+    type: MODAL_TYPE.INFO,
+    title: "",
+    message: "",
+};
+
 

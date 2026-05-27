@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { THEMES, VIEW_OPTIONS } from "@/app/constantsGlobals";
 import { getLogoUrl } from "@/app/helpers/assets/getAssetPath";
 import { QUERY_PARAM_KEYS, TITLE_COLOR_CLASSES, WELCOME_TITLES } from "../constantsHooks";
+import type { HomeQueryParamsResult } from "../interfacesHooks";
 
 const VALID_VIEWS = Object.values(VIEW_OPTIONS) as string[];
 const VALID_THEMES = Object.values(THEMES) as string[];
