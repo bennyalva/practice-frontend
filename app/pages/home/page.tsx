@@ -53,7 +53,7 @@ export default function HomePage() {
                         value={name}
                         onChange={setName}
                         maxLength={15}
-                        placeholder="Escribe tu nombre"
+                        placeholder="Escribe o dicta tu nombre..."
                     />
                 </div>
             </main>

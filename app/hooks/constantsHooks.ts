@@ -12,3 +12,5 @@ export const TITLE_COLOR_CLASSES: Record<string, string> = {
     "1": "text-title-shopinbaz",
     "2": "text-title-elektra",
 };
+
+export const LANGUAGE_SPANISH = 'es-ES';
