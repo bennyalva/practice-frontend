@@ -11,7 +11,7 @@ const logoMap: Record<string, Record<string, string>> = {
   },
 };
 
-/** Retorna el logo correspondiente según la vista (view) y el tema. */
+
 export function getLogoUrl(view: string, theme: string): string {
   return logoMap[view]?.[theme] ?? ASSETS_PATHS.LOGOS.ELEKTRA_LIGHT;
 }
