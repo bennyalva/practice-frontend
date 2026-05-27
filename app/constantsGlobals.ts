@@ -1,4 +1,5 @@
 import { prependOnceListener } from "process";
+import { MODAL_TYPE, ModalType } from "./hooks/interfacesHooks";
 
 export const ROUTES = {
     HOME: '/pages/home',
@@ -39,4 +40,17 @@ export const VALIDATION = {
 };
 
 export const PROTECTED_ROUTES = [ROUTES.DASHBOARD, ROUTES.ADMIN, ROUTES.PROFILE];
+
+export const TITLE_ERROR_GENERIC = {
+    ERROR: "Error",
+    WARNING: "Aviso",
+}
+
+export const INITIAL_MODAL: { isOpen: boolean; type: ModalType; title: string; message: string } = {
+    isOpen: false,
+    type: MODAL_TYPE.INFO,
+    title: "",
+    message: "",
+};
+
 

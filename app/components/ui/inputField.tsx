@@ -11,7 +11,8 @@ export const InputField = ({
   value,
   onChange,
   maxLength,
-  placeholder
+  placeholder,
+  onSpeechError,
 }: InputFieldProps) => {
   const [draft, setDraft] = useState(value);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +38,7 @@ export const InputField = ({
       setDraft(speechValue);
       validateAndCommit(speechValue);
     },
+    onError: onSpeechError,
     maxLength,
   });
 

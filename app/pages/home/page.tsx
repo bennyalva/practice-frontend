@@ -4,9 +4,11 @@ import { BrandLogo } from "@/app/components/shared/brandLogo";
 import { useEffect, useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
+import { Modal } from "@/app/components/ui/modal";
 import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryParams";
 import { applyTheme } from "@/app/helpers/theme/themeHelpers";
 import { ASSETS_PATHS, VALIDATION } from "@/app/constantsGlobals";
+import { useModal } from "@/app/hooks/useModal/useModal";
 
 export default function HomePage() {
     const { logoUrl, welcomeTitle, theme, colorTitle } = useHomeQueryParams();
@@ -16,9 +18,10 @@ export default function HomePage() {
     }, [theme]);
 
     const [name, setName] = useState("");
+    const { modal, showInfo, showByError, closeModal } = useModal();
 
     const handleStart = () => {
-        console.log("Iniciando solicitud para:", name);
+        showInfo("¡Nombre registrado!", `Has ingresado: ${name}`);
     };
 
     return (
@@ -54,6 +57,7 @@ export default function HomePage() {
                         onChange={setName}
                         maxLength={15}
                         placeholder="Escribe o dicta tu nombre..."
+                        onSpeechError={showByError}
                     />
                 </div>
             </main>
@@ -66,6 +70,14 @@ export default function HomePage() {
                     Comenzar
                 </PrimaryButton>
             </footer>
+
+            <Modal
+                isOpen={modal.isOpen}
+                onClose={closeModal}
+                type={modal.type}
+                title={modal.title}
+                message={modal.message}
+            />
         </div>
     );
 }

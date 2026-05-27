@@ -19,3 +19,10 @@ export const REOGNICTION_ERRORS = {
     NOT_ALLOWED: 'not-allowed',
     NO_SPEECH: 'no-speech',
 };
+
+export const ERROR_MESSAGES = {
+    NOT_ALLOWED: "Permiso de micrófono denegado. Actívalo desde la configuración del navegador.",
+    NO_SPEECH: "No se detectó ninguna voz. Intenta dictar de nuevo.",
+    DEFAULT: "Ocurrió un error con el reconocimiento de voz. Intenta de nuevo.",
+    ERROR_STARTING: "Error al iniciar el dictado, intenta de nuevo.",
+};

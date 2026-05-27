@@ -1,21 +1,24 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { UseSpeechRecognitionOptions, UseSpeechRecognitionResult } from "../interfacesHooks";
-import { LANGUAGE_SPANISH, REOGNICTION_ERRORS } from "../constantsHooks";
+import { UseSpeechRecognitionOptions, UseSpeechRecognitionResult, MODAL_TYPE } from "../interfacesHooks";
+import { ERROR_MESSAGES, LANGUAGE_SPANISH, REOGNICTION_ERRORS } from "../constantsHooks";
 
 export function useSpeechRecognition({
   onResult,
+  onError,
   maxLength,
 }: UseSpeechRecognitionOptions): UseSpeechRecognitionResult {
   const [isListening, setIsListening] = useState(false);
   const [hasSupport, setHasSupport] = useState(false);
   const recognitionRef = useRef<any>(null);
   const onResultRef = useRef(onResult);
+  const onErrorRef = useRef(onError);
   const maxLengthRef = useRef(maxLength);
 
   // Mantener refs actualizadas sin disparar re-renders
   onResultRef.current = onResult;
+  onErrorRef.current = onError;
   maxLengthRef.current = maxLength;
 
   useEffect(() => {
@@ -41,20 +44,18 @@ export function useSpeechRecognition({
     recognition.onerror = (event: any) => {
 
       if (event.error === REOGNICTION_ERRORS.NOT_ALLOWED) {
-        console.warn("Permiso de micrófono denegado o ventana cerrada por el usuario.");
-        // Opcional: Aquí podrías setear un estado para mostrar un mensaje sutil en la UI
-        setIsListening(false);
-        return; // Frenamos la ejecución aquí para que no salte el console.error
-      }
-
-      if (event.error === REOGNICTION_ERRORS.NO_SPEECH) {
-        console.warn("No se detectó ninguna voz.");
+        onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.NOT_ALLOWED });
         setIsListening(false);
         return;
       }
 
-      // Cualquier otro error crítico (ej. 'network', 'audio-capture') sí se reporta
-      console.error("Error crítico en reconocimiento de voz:", event.error);
+      if (event.error === REOGNICTION_ERRORS.NO_SPEECH) {
+        onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.NO_SPEECH });
+        setIsListening(false);
+        return;
+      }
+
+      onErrorRef.current?.({ type: MODAL_TYPE.ERROR, message: ERROR_MESSAGES.DEFAULT });
       setIsListening(false);
     };
 
@@ -80,7 +81,7 @@ export function useSpeechRecognition({
       try {
         recognitionRef.current.start();
       } catch (error) {
-        console.error("Error al iniciar el dictado:", error);
+        onErrorRef.current?.({ type: MODAL_TYPE.ERROR, message: ERROR_MESSAGES.ERROR_STARTING });
         setIsListening(false);
       }
     }
