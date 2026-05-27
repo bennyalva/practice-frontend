@@ -14,3 +14,8 @@ export const TITLE_COLOR_CLASSES: Record<string, string> = {
 };
 
 export const LANGUAGE_SPANISH = 'es-ES';
+
+export const REOGNICTION_ERRORS = {
+    NOT_ALLOWED: 'not-allowed',
+    NO_SPEECH: 'no-speech',
+};

@@ -1,6 +1,4 @@
-interface SpeechIconProps {
-  listening?: boolean;
-}
+import { SpeechIconProps } from "../../interfacesComponents";
 
 export default function SpeechIcon({ listening = false }: SpeechIconProps) {
   return (

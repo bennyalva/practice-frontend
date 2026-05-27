@@ -8,8 +8,8 @@ export const InputField = ({
   label,
   value,
   onChange,
-  maxLength = 15,
-  placeholder = "Escribe tu nombre",
+  maxLength,
+  placeholder
 }: InputFieldProps) => {
   const { isListening, hasSupport, toggleListening } = useSpeechRecognition({
     onResult: (value) => onChange(value),

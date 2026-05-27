@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { UseSpeechRecognitionOptions, UseSpeechRecognitionResult } from "../interfacesHooks";
-import { LANGUAGE_SPANISH } from "../constantsHooks";
+import { LANGUAGE_SPANISH, REOGNICTION_ERRORS } from "../constantsHooks";
 
 export function useSpeechRecognition({
   onResult,
@@ -39,7 +39,7 @@ export function useSpeechRecognition({
 
     recognition.onerror = (event: any) => {
       // Manejo silencioso y elegante para acciones comunes del usuario
-      if (event.error === 'not-allowed') {
+      if (event.error === REOGNICTION_ERRORS.NOT_ALLOWED) {
         console.warn("Permiso de micrófono denegado o ventana cerrada por el usuario.");
         // Opcional: Aquí podrías setear un estado para mostrar un mensaje sutil en la UI
         // setPermissionDenied(true);
@@ -47,7 +47,7 @@ export function useSpeechRecognition({
         return; // Frenamos la ejecución aquí para que no salte el console.error
       }
 
-      if (event.error === 'no-speech') {
+      if (event.error === REOGNICTION_ERRORS.NO_SPEECH) {
         console.warn("No se detectó ninguna voz.");
         setIsListening(false);
         return;

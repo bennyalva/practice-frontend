@@ -16,3 +16,6 @@ export interface PrimaryButtonProps {
   disabled?: boolean;
   children: React.ReactNode;
 }
+export interface SpeechIconProps {
+  listening?: boolean;
+}
