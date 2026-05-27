@@ -18,9 +18,7 @@ export default function HomePage() {
     const [name, setName] = useState("");
 
     const handleStart = () => {
-        if (name.trim().length > 0) {
-            console.log("Iniciando solicitud para:", name, "| view num:");
-        }
+        console.log("Iniciando solicitud para:", name);
     };
 
     return (
@@ -63,7 +61,7 @@ export default function HomePage() {
             <footer className="w-full max-w-md pb-6 pt-2">
                 <PrimaryButton
                     onClick={handleStart}
-                    disabled={name.trim().length === 0}
+                    disabled={name.trim().length <= 3}
                 >
                     Comenzar
                 </PrimaryButton>
