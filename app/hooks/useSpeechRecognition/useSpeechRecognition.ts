@@ -38,7 +38,23 @@ export function useSpeechRecognition({
     };
 
     recognition.onerror = (event: any) => {
-      console.error("Error en reconocimiento de voz:", event.error);
+      // Manejo silencioso y elegante para acciones comunes del usuario
+      if (event.error === 'not-allowed') {
+        console.warn("Permiso de micrófono denegado o ventana cerrada por el usuario.");
+        // Opcional: Aquí podrías setear un estado para mostrar un mensaje sutil en la UI
+        // setPermissionDenied(true);
+        setIsListening(false);
+        return; // Frenamos la ejecución aquí para que no salte el console.error
+      }
+
+      if (event.error === 'no-speech') {
+        console.warn("No se detectó ninguna voz.");
+        setIsListening(false);
+        return;
+      }
+
+      // Cualquier otro error crítico (ej. 'network', 'audio-capture') sí se reporta
+      console.error("Error crítico en reconocimiento de voz:", event.error);
       setIsListening(false);
     };
 
