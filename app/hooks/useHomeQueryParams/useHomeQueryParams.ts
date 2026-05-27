@@ -3,14 +3,15 @@
 import { useSearchParams } from "next/navigation";
 import { THEMES, VIEW_OPTIONS } from "@/app/constantsGlobals";
 import { getLogoUrl } from "@/app/helpers/assets/getAssetPath";
-import { QUERY_PARAM_KEYS, WELCOME_TITLES } from "../constantsHooks";
+import { QUERY_PARAM_KEYS, TITLE_COLOR_CLASSES, WELCOME_TITLES } from "../constantsHooks";
 
 const VALID_VIEWS = Object.values(VIEW_OPTIONS) as string[];
 const VALID_THEMES = Object.values(THEMES) as string[];
 
+
 function resolveView(view: string | null): string {
-  if (!view) return VIEW_OPTIONS.elektraLoan;
-  return VALID_VIEWS.includes(view) ? view : VIEW_OPTIONS.elektraLoan;
+  if (!view) return VIEW_OPTIONS.ELEKTRA_LOAN;
+  return VALID_VIEWS.includes(view) ? view : VIEW_OPTIONS.ELEKTRA_LOAN;
 }
 
 function resolveTheme(theme: string | null): string {
@@ -19,11 +20,11 @@ function resolveTheme(theme: string | null): string {
 }
 
 const viewConfigs: Record<string, Pick<HomeQueryParamsResult, "welcomeTitle">> = {
-  [VIEW_OPTIONS.elektraLoan]: {
-    welcomeTitle: WELCOME_TITLES.elektraLoan,
+  [VIEW_OPTIONS.ELEKTRA_LOAN]: {
+    welcomeTitle: WELCOME_TITLES.ELEKTRA_LOAN,
   },
-  [VIEW_OPTIONS.shopinbaz]: {
-    welcomeTitle: WELCOME_TITLES.shopinbaz,
+  [VIEW_OPTIONS.SHOPINBAZ]: {
+    welcomeTitle: WELCOME_TITLES.SHOPINBAZ,
   },
 };
 
@@ -37,5 +38,6 @@ export function useHomeQueryParams(): HomeQueryParamsResult {
     ...viewConfigs[configView],
     logoUrl: getLogoUrl(configView, theme),
     theme,
+    colorTitle: TITLE_COLOR_CLASSES[configView],
   };
 }

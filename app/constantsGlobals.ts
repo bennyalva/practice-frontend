@@ -1,3 +1,5 @@
+import { prependOnceListener } from "process";
+
 export const ROUTES = {
   HOME: '/pages/home',
   DASHBOARD: '/dashboard',  
@@ -11,8 +13,8 @@ export const SESSION_NAMES = {
 };
 
 export const VIEW_OPTIONS = {
-    shopinbaz: '1',
-    elektraLoan: '2',
+    SHOPINBAZ: '1',
+    ELEKTRA_LOAN: '2',
 };
 
 export const THEMES = {
@@ -26,6 +28,9 @@ export const ASSETS_PATHS = {
         SHOPINBAZ_LIGHT: '/images/pages/home/shopinbazLight.png',
         ELEKTRA_DARK: '/images/pages/home/elecktraDark.png',
         SHOPINBAZ_DARK: '/images/pages/home/shopingbazDark.png',
+    },
+    HOME: {
+        PEOPLE: '/images/pages/home/people.png',
     }
 };
 
