@@ -4,7 +4,7 @@ import { BrandLogo } from "@/app/components/shared/brandLogo";
 import { useEffect, useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
-import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams";
+import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryParams";
 import { applyTheme } from "@/app/helpers/theme/themeHelpers";
 
 export default function HomePage() {
