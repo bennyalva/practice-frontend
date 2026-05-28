@@ -1,5 +1,5 @@
-import { prependOnceListener } from "process";
-import { MODAL_TYPE, ModalType } from "./hooks/interfacesHooks";
+import { MODAL_TYPE, ModalType } from "./interfacesGlobals";
+
 
 export const ROUTES = {
     HOME: '/pages/home',
@@ -58,4 +58,9 @@ export const GTM_EVENTS = {
     NAME_DISPLAYED: 'name_displayed',
     THEME_LOADED: 'theme_loaded',
 };
+
+export const INPUT_METHODS = {
+    MANUAL: 'manual',
+    VOICE: 'voice',
+} as const;
 

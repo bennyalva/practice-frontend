@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { UseSpeechRecognitionOptions, UseSpeechRecognitionResult, MODAL_TYPE } from "../interfacesHooks";
-import { ERROR_MESSAGES, LANGUAGE_SPANISH, REOGNICTION_ERRORS } from "../constantsHooks";
+import { UseSpeechRecognitionOptions, UseSpeechRecognitionResult } from "../interfacesHooks";
+import { ERROR_MESSAGES, LANGUAGE_SPANISH, RECOGNITION_ERRORS, } from "../constantsHooks";
+import { MODAL_TYPE } from "@/app/interfacesGlobals";
 
 export function useSpeechRecognition({
   onResult,
@@ -43,13 +44,13 @@ export function useSpeechRecognition({
 
     recognition.onerror = (event: any) => {
 
-      if (event.error === REOGNICTION_ERRORS.NOT_ALLOWED) {
+      if (event.error === RECOGNITION_ERRORS.NOT_ALLOWED) {
         onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.NOT_ALLOWED });
         setIsListening(false);
         return;
       }
 
-      if (event.error === REOGNICTION_ERRORS.NO_SPEECH) {
+      if (event.error === RECOGNITION_ERRORS.NO_SPEECH) {
         onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.NO_SPEECH });
         setIsListening(false);
         return;

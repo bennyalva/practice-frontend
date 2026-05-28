@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import { ModalType, MODAL_TYPE, ModalState } from "@/app/hooks/interfacesHooks";
+import { ModalState } from "@/app/hooks/interfacesHooks";
 import { INITIAL_MODAL, TITLE_ERROR_GENERIC } from "@/app/constantsGlobals";
+import { MODAL_TYPE, ModalType } from "@/app/interfacesGlobals";
 
 export function useModal() {
   const [modal, setModal] = useState<ModalState>(INITIAL_MODAL);

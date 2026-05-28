@@ -1,4 +1,4 @@
-import { ModalType } from "../hooks/interfacesHooks";
+import { ModalType } from "../interfacesGlobals";
 import { InputMethods } from "../pages/interfacesPages";
 
 
