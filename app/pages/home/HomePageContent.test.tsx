@@ -67,36 +67,6 @@ describe("HomePageContent", () => {
     });
   });
 
-  // describe("button disabled state", () => {
-  //   it("is disabled when the name is empty", () => {
-  //     const { container } = render(<HomePageContent />);
-
-  //     const button = container.querySelector("button")!;
-  //     expect(button).toBeDisabled();
-  //   });
-
-  //   it("is disabled when the name has less than 4 characters", () => {
-  //     const { container } = render(<HomePageContent />);
-
-  //     const input = container.querySelector("input")!;
-  //     fireEvent.change(input, { target: { value: "Ben" } });
-  //     fireEvent.blur(input);
-
-  //     const button = container.querySelector("button")!;
-  //     expect(button).toBeDisabled();
-  //   });
-
-  //   it("is enabled when the name has 4 or more characters", () => {
-  //     const { container } = render(<HomePageContent />);
-
-  //     const input = container.querySelector("input")!;
-  //     fireEvent.change(input, { target: { value: "Benny" } });
-  //     fireEvent.blur(input);
-
-  //     const button = container.querySelector("button")!;
-  //     expect(button).not.toBeDisabled();
-  //   });
-  // });
 
   describe("GTM events", () => {
     it("pushes NAME_DISPLAYED event when the button is clicked", () => {
