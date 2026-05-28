@@ -53,4 +53,9 @@ export const INITIAL_MODAL: { isOpen: boolean; type: ModalType; title: string; m
     message: "",
 };
 
+export const GTM_EVENTS = {
+    NAME_INPUT: 'name_input',
+    NAME_DISPLAYED: 'name_displayed',
+    THEME_LOADED: 'theme_loaded',
+};
 

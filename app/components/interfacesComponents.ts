@@ -1,10 +1,12 @@
 import { ModalType } from "../hooks/interfacesHooks";
+import { InputMethods } from "../pages/interfacesPages";
 
 
 export interface BrandLogoProps {
   logoUrl: string | null;
   altText?: string;
 }
+
 
 export interface InputFieldProps {
   label: string;
@@ -13,6 +15,7 @@ export interface InputFieldProps {
   maxLength: number;
   placeholder: string;
   onSpeechError?: (error: { type: ModalType; message: string }) => void;
+  onCommit?: (value: string, method: InputMethods) => void;
 }
 
 export interface PrimaryButtonProps {

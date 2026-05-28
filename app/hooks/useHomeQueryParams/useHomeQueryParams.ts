@@ -1,10 +1,11 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { THEMES, VIEW_OPTIONS } from "@/app/constantsGlobals";
+import { GTM_EVENTS, THEMES, VIEW_OPTIONS } from "@/app/constantsGlobals";
 import { getLogoUrl } from "@/app/helpers/assets/getAssetPath";
 import { QUERY_PARAM_KEYS, TITLE_COLOR_CLASSES, WELCOME_TITLES } from "../constantsHooks";
 import type { HomeQueryParamsResult } from "../interfacesHooks";
+import { pushToDataLayer } from "@/app/libs/gtm/gtm";
 
 const VALID_VIEWS = Object.values(VIEW_OPTIONS) as string[];
 const VALID_THEMES = Object.values(THEMES) as string[];
@@ -34,6 +35,11 @@ export function useHomeQueryParams(): HomeQueryParamsResult {
 
   const configView = resolveView(searchParams.get(QUERY_PARAM_KEYS.VIEW));
   const theme = resolveTheme(searchParams.get(QUERY_PARAM_KEYS.THEME));
+
+  pushToDataLayer({
+    event: GTM_EVENTS.THEME_LOADED,
+    num: configView
+  });
 
   return {
     ...viewConfigs[configView],

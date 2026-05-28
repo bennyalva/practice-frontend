@@ -3,7 +3,7 @@
 import { InputFieldProps } from "../interfacesComponents";
 import { useSpeechRecognition } from "@/app/hooks/useSpeechRecognition/useSpeechRecognition";
 import SpeechIcon from "@/app/components/shared/icons/speechIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VALIDATION } from "@/app/constantsGlobals";
 
 export const InputField = ({
@@ -13,9 +13,11 @@ export const InputField = ({
   maxLength,
   placeholder,
   onSpeechError,
+  onCommit,
 }: InputFieldProps) => {
   const [draft, setDraft] = useState(value);
   const [error, setError] = useState<string | null>(null);
+  const methodRef = useRef<'manual' | 'voice'>('manual');
 
   // Sync internal draft when parent pushes a new value (voice commit, reset)
   useEffect(() => {
@@ -29,12 +31,14 @@ export const InputField = ({
       setError(`Mínimo ${VALIDATION.NAME_MIN_LENGTH} caracteres`);
     } else {
       setError(null);
+      onCommit?.(trimmed, methodRef.current);
     }
     onChange(trimmed);
   };
 
   const { isListening, hasSupport, toggleListening } = useSpeechRecognition({
     onResult: (speechValue) => {
+      methodRef.current = 'voice';
       setDraft(speechValue);
       validateAndCommit(speechValue);
     },
@@ -48,6 +52,7 @@ export const InputField = ({
   };
 
   const handleBlur = () => {
+    methodRef.current = 'manual';
     validateAndCommit(draft);
   };
 

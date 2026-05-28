@@ -7,9 +7,10 @@ import { PrimaryButton } from "@/app/components/ui/primaryButton";
 import { Modal } from "@/app/components/ui/modal";
 import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryParams";
 import { applyTheme } from "@/app/helpers/theme/themeHelpers";
-import { ASSETS_PATHS, VALIDATION } from "@/app/constantsGlobals";
+import { ASSETS_PATHS, GTM_EVENTS, VALIDATION } from "@/app/constantsGlobals";
 import { useModal } from "@/app/hooks/useModal/useModal";
 import { pushToDataLayer } from "@/app/libs/gtm/gtm";
+import { InputMethods } from "../interfacesPages";
 
 export function HomePageContent() {
     const { logoUrl, welcomeTitle, theme, colorTitle } = useHomeQueryParams();
@@ -21,19 +22,16 @@ export function HomePageContent() {
     const [name, setName] = useState("");
     const { modal, showInfo, showByError, closeModal } = useModal();
 
-    const handleNameChange = (value: string) => {
-        setName(value);
+    const handleCommit = (value: string, method: InputMethods) => {
         pushToDataLayer({
-            event: "name_input",
-            value,
+            event: GTM_EVENTS.NAME_INPUT,
+            method,
         });
     };
 
     const handleStart = () => {
         pushToDataLayer({
-            event: "name_submitted",
-            name,
-            name_length: name.trim().length,
+            event: GTM_EVENTS.NAME_DISPLAYED
         });
         showInfo("¡Nombre registrado!", `Has ingresado: ${name}`);
     };
@@ -69,7 +67,8 @@ export function HomePageContent() {
                         <InputField
                             label="¿Cómo prefieres que te llamemos?"
                             value={name}
-                            onChange={handleNameChange}
+                            onChange={setName}
+                            onCommit={handleCommit}
                             maxLength={15}
                             placeholder="Escribe o dicta tu nombre..."
                             onSpeechError={showByError}
