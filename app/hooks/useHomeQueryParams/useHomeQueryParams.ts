@@ -9,17 +9,10 @@ import type { HomeQueryParamsResult } from "../interfacesHooks";
 import { pushToDataLayer } from "@/app/libs/gtm/gtm";
 
 const VALID_VIEWS = Object.values(VIEW_OPTIONS) as string[];
-const VALID_THEMES = Object.values(THEMES) as string[];
-
 
 function resolveView(view: string | null): string {
   if (!view) return VIEW_OPTIONS.ELEKTRA_LOAN;
   return VALID_VIEWS.includes(view) ? view : VIEW_OPTIONS.ELEKTRA_LOAN;
-}
-
-function resolveTheme(theme: string | null): string {
-  if (!theme) return THEMES.DARK;
-  return VALID_THEMES.includes(theme) ? theme : THEMES.DARK;
 }
 
 const viewConfigs: Record<string, Pick<HomeQueryParamsResult, "welcomeTitle">> = {
@@ -35,19 +28,17 @@ export function useHomeQueryParams(): HomeQueryParamsResult {
   const searchParams = useSearchParams();
 
   const configView = resolveView(searchParams.get(QUERY_PARAM_KEYS.VIEW));
-  const theme = resolveTheme(searchParams.get(QUERY_PARAM_KEYS.THEME));
 
   useEffect(() => {
     pushToDataLayer({
       event: GTM_EVENTS.THEME_LOADED,
       num: configView,
     });
-  }, [pushToDataLayer]);
+  }, []);
 
   return {
     ...viewConfigs[configView],
-    logoUrl: getLogoUrl(configView, theme),
-    theme,
+    logoUrl: getLogoUrl(configView, THEMES.DARK),
     colorTitle: TITLE_COLOR_CLASSES[configView],
   };
 }

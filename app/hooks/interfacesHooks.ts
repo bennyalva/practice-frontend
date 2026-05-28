@@ -1,7 +1,6 @@
 export interface HomeQueryParamsResult {
   welcomeTitle: string;
   logoUrl: string;
-  theme: string;
   colorTitle: string;
 }
 export const MODAL_TYPE = {

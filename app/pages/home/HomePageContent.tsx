@@ -1,23 +1,18 @@
 "use client";
 
 import { BrandLogo } from "@/app/components/shared/brandLogo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
 import { Modal } from "@/app/components/ui/modal";
 import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryParams";
-import { applyTheme } from "@/app/helpers/theme/themeHelpers";
 import { ASSETS_PATHS, GTM_EVENTS, VALIDATION } from "@/app/constantsGlobals";
 import { useModal } from "@/app/hooks/useModal/useModal";
 import { pushToDataLayer } from "@/app/libs/gtm/gtm";
 import { InputMethods } from "../interfacesPages";
 
 export function HomePageContent() {
-    const { logoUrl, welcomeTitle, theme, colorTitle } = useHomeQueryParams();
-
-    useEffect(() => {
-        applyTheme(theme);
-    }, [theme]);
+    const { logoUrl, welcomeTitle, colorTitle } = useHomeQueryParams();
 
     const [name, setName] = useState("");
     const [inputKey, setInputKey] = useState(0);

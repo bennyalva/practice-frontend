@@ -5,7 +5,6 @@ export const WELCOME_TITLES = {
 
 export const QUERY_PARAM_KEYS = {
     VIEW: "num",
-    THEME: "theme",
 };
 
 export const TITLE_COLOR_CLASSES: Record<string, string> = {
