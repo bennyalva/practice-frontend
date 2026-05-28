@@ -1,4 +1,5 @@
-import { PrimaryButtonProps } from '../interfacesComponents';
+import { PrimaryButtonProps } from "../../interfacesComponents";
+
 
 export const PrimaryButton = ({ onClick, children, disabled }: PrimaryButtonProps
 ) => {

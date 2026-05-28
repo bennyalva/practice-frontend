@@ -1,7 +1,5 @@
-interface CharacterCounterProps {
-  current: number;
-  max: number;
-}
+import { CharacterCounterProps } from "../../interfacesComponents";
+
 
 export const CharacterCounter = ({ current, max }: CharacterCounterProps) => {
   return (

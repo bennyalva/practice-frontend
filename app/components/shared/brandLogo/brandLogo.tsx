@@ -1,4 +1,5 @@
-import { BrandLogoProps } from "../interfacesComponents";
+import { BrandLogoProps } from "../../interfacesComponents";
+
 
 export const BrandLogo = ({ logoUrl, altText = "Logo Elektra" }: BrandLogoProps) => {
     return (
