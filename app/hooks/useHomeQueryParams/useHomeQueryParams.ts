@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { GTM_EVENTS, THEMES, VIEW_OPTIONS } from "@/app/constantsGlobals";
 import { getLogoUrl } from "@/app/helpers/assets/getAssetPath";
 import { QUERY_PARAM_KEYS, TITLE_COLOR_CLASSES, WELCOME_TITLES } from "../constantsHooks";
@@ -36,10 +37,12 @@ export function useHomeQueryParams(): HomeQueryParamsResult {
   const configView = resolveView(searchParams.get(QUERY_PARAM_KEYS.VIEW));
   const theme = resolveTheme(searchParams.get(QUERY_PARAM_KEYS.THEME));
 
-  pushToDataLayer({
-    event: GTM_EVENTS.THEME_LOADED,
-    num: configView
-  });
+  useEffect(() => {
+    pushToDataLayer({
+      event: GTM_EVENTS.THEME_LOADED,
+      num: configView,
+    });
+  }, [pushToDataLayer]);
 
   return {
     ...viewConfigs[configView],

@@ -18,6 +18,7 @@ export const InputField = ({
   const [draft, setDraft] = useState(value);
   const [error, setError] = useState<string | null>(null);
   const methodRef = useRef<'manual' | 'voice'>('manual');
+  const lastCommittedRef = useRef<string>('');
 
   // Sync internal draft when parent pushes a new value (voice commit, reset)
   useEffect(() => {
@@ -31,7 +32,10 @@ export const InputField = ({
       setError(`Mínimo ${VALIDATION.NAME_MIN_LENGTH} caracteres`);
     } else {
       setError(null);
-      onCommit?.(trimmed, methodRef.current);
+      if (trimmed !== lastCommittedRef.current) {
+        lastCommittedRef.current = trimmed;
+        onCommit?.(trimmed, methodRef.current);
+      }
     }
     onChange(trimmed);
   };
@@ -83,7 +87,7 @@ export const InputField = ({
           <button
             type="button"
             onClick={toggleListening}
-            className={`absolute right-2 p-1 rounded-full transition-all duration-200 ${isListening
+            className={`absolute right-2 p-1 rounded-full transition-all cursor-pointer duration-200 ${isListening
               ? "text-red-500 scale-110 animate-pulse"
               : "text-secondary hover:text-primary"
               }`}
