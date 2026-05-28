@@ -26,13 +26,13 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=new URLSearchParams(location.search);if(p.get("theme")==="dark"){document.documentElement.classList.add("dark")}}catch(e){}})()`,
+            __html: `(function(){try{var p=new URLSearchParams(location.search);if(p.get("theme")==="light"){document.documentElement.classList.remove("dark")}}catch(e){}})()`,
           }}
         />
       </head>

@@ -20,6 +20,7 @@ export function HomePageContent() {
     }, [theme]);
 
     const [name, setName] = useState("");
+    const [inputKey, setInputKey] = useState(0);
     const { modal, showInfo, showByError, closeModal } = useModal();
 
     const handleCommit = (value: string, method: InputMethods) => {
@@ -33,7 +34,10 @@ export function HomePageContent() {
         pushToDataLayer({
             event: GTM_EVENTS.NAME_DISPLAYED
         });
-        showInfo("¡Nombre registrado!", `Has ingresado: ${name}`);
+        showInfo("¡Nombre registrado!", `Has ingresado: ${name}`, () => {
+            setName("");
+            setInputKey((prev) => prev + 1);
+        });
     };
 
     return (
@@ -65,6 +69,7 @@ export function HomePageContent() {
 
                     <div className="w-full px-4 mt-4">
                         <InputField
+                            key={inputKey}
                             label="¿Cómo prefieres que te llamemos?"
                             value={name}
                             onChange={setName}

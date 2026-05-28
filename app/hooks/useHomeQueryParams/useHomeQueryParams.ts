@@ -18,8 +18,8 @@ function resolveView(view: string | null): string {
 }
 
 function resolveTheme(theme: string | null): string {
-  if (!theme) return THEMES.LIGHT;
-  return VALID_THEMES.includes(theme) ? theme : THEMES.LIGHT;
+  if (!theme) return THEMES.DARK;
+  return VALID_THEMES.includes(theme) ? theme : THEMES.DARK;
 }
 
 const viewConfigs: Record<string, Pick<HomeQueryParamsResult, "welcomeTitle">> = {
