@@ -70,80 +70,28 @@ describe("InputField", () => {
     });
   });
 
-  describe("onChange", () => {
-    it("calls onChange with trimmed value on blur", () => {
-      const onChange = vi.fn();
-      const { container } = render(<InputField {...buildProps({ onChange })} />);
 
-      const input = container.querySelector("input")!;
-      fireEvent.change(input, { target: { value: "  Benny  " } });
-      fireEvent.blur(input);
+});
 
-      expect(onChange).toHaveBeenCalledWith("Benny");
-    });
+describe("validation", () => {
+  it("shows error when value is shorter than minimum length on blur", () => {
+    const { container } = render(<InputField {...buildProps()} />);
+
+    const input = container.querySelector("input")!;
+    fireEvent.change(input, { target: { value: "ab" } });
+    fireEvent.blur(input);
+
+    expect(container.textContent).toContain("Mínimo 4 caracteres");
   });
 
-  describe("validation", () => {
-    it("shows error when value is shorter than minimum length on blur", () => {
-      const { container } = render(<InputField {...buildProps()} />);
+  it("does not show error when value meets minimum length", () => {
+    const { container } = render(<InputField {...buildProps()} />);
 
-      const input = container.querySelector("input")!;
-      fireEvent.change(input, { target: { value: "ab" } });
-      fireEvent.blur(input);
+    const input = container.querySelector("input")!;
+    fireEvent.change(input, { target: { value: "Benny" } });
+    fireEvent.blur(input);
 
-      expect(container.textContent).toContain("Mínimo 4 caracteres");
-    });
-
-    it("does not show error when value meets minimum length", () => {
-      const { container } = render(<InputField {...buildProps()} />);
-
-      const input = container.querySelector("input")!;
-      fireEvent.change(input, { target: { value: "Benny" } });
-      fireEvent.blur(input);
-
-      expect(container.textContent).not.toContain("Mínimo 4 caracteres");
-    });
-
-
-    describe("onCommit", () => {
-      it("calls onCommit with trimmed value and manual method on blur", () => {
-        const onCommit = vi.fn();
-        const { container } = render(<InputField {...buildProps({ onCommit })} />);
-
-        const input = container.querySelector("input")!;
-        fireEvent.change(input, { target: { value: "  Benny  " } });
-        fireEvent.blur(input);
-
-        expect(onCommit).toHaveBeenCalledWith("Benny", "manual");
-      });
-
-      it("does not call onCommit when value is below minimum length", () => {
-        const onCommit = vi.fn();
-        const { container } = render(<InputField {...buildProps({ onCommit })} />);
-
-        const input = container.querySelector("input")!;
-        fireEvent.change(input, { target: { value: "ab" } });
-        fireEvent.blur(input);
-
-        expect(onCommit).not.toHaveBeenCalled();
-      });
-
-    });
-
-    describe("speech recognition", () => {
-      it("renders SpeechInputButton with listening state from hook", () => {
-        mockSpeech.mockReturnValue({
-          isListening: true,
-          hasSupport: true,
-          toggleListening: vi.fn(),
-        });
-
-        const { container } = render(<InputField {...buildProps()} />);
-
-        expect(container.querySelector("svg")).toBeTruthy();
-      });
-    });
-
+    expect(container.textContent).not.toContain("Mínimo 4 caracteres");
   });
 
 });

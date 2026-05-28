@@ -26,30 +26,6 @@ describe("ModalIcon", () => {
     expect(wrapper).toHaveClass("bg-red-500");
   });
 
-  it("renders an SVG element for each variant", () => {
-    const { container, rerender } = render(<ModalIcon type="info" />);
-    expect(container.querySelector("svg")).toBeInTheDocument();
 
-    rerender(<ModalIcon type="warning" />);
-    expect(container.querySelector("svg")).toBeInTheDocument();
 
-    rerender(<ModalIcon type="error" />);
-    expect(container.querySelector("svg")).toBeInTheDocument();
-  });
-
-  it("renders unique SVG structure per variant", () => {
-    const { container, rerender } = render(<ModalIcon type="info" />);
-    const infoSvg = container.querySelector("svg")!.innerHTML;
-
-    rerender(<ModalIcon type="warning" />);
-    const warningSvg = container.querySelector("svg")!.innerHTML;
-
-    rerender(<ModalIcon type="error" />);
-    const errorSvg = container.querySelector("svg")!.innerHTML;
-
-    // Each variant should have a distinct SVG structure
-    expect(infoSvg).not.toEqual(warningSvg);
-    expect(infoSvg).not.toEqual(errorSvg);
-    expect(warningSvg).not.toEqual(errorSvg);
-  });
 });

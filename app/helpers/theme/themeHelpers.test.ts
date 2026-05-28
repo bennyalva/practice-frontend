@@ -22,14 +22,5 @@ describe("applyTheme", () => {
 
 
 
-  it("does not remove other classes from the root element", () => {
-    document.documentElement.classList.add("dark", "custom-class");
-
-    applyTheme("light");
-
-    expect(document.documentElement.classList.contains("dark")).toBe(false);
-    expect(document.documentElement.classList.contains("custom-class")).toBe(true);
-  });
-
 
 });

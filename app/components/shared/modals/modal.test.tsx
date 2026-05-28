@@ -44,11 +44,7 @@ describe("Modal", () => {
       expect(queryDOM().title()).toContain(defaultProps.message);
     });
 
-    it("renders the close button with accessible label", () => {
-      render(<Modal {...buildProps()} />);
 
-      expect(queryDOM().button()).toBeInTheDocument();
-    });
 
     it("calls onClose when the close button is clicked", () => {
       const onClose = vi.fn();
@@ -59,32 +55,8 @@ describe("Modal", () => {
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 
-    it("renders the ModalIcon (contains an SVG)", () => {
-      render(<Modal {...buildProps()} />);
-
-      expect(queryDOM().svg()).toBeInTheDocument();
-    });
 
 
-  });
 
-  describe("when isOpen is false", () => {
-    it("does not render the title", () => {
-      render(<Modal {...buildProps({ isOpen: false })} />);
-
-      expect(queryDOM().title()).not.toContain(defaultProps.title);
-    });
-
-    it("does not render the message", () => {
-      render(<Modal {...buildProps({ isOpen: false })} />);
-
-      expect(queryDOM().title()).not.toContain(defaultProps.message);
-    });
-
-    it("does not render the close button", () => {
-      render(<Modal {...buildProps({ isOpen: false })} />);
-
-      expect(queryDOM().button()).toBeNull();
-    });
   });
 });

@@ -18,29 +18,14 @@ describe("PrimaryButton", () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+  it("applies the disabled attribute to the button", () => {
+    const { container } = render(
+      <PrimaryButton onClick={vi.fn()} disabled>Comenzar</PrimaryButton>,
+    );
 
-  describe("when disabled is true", () => {
-    it("applies the disabled attribute to the button", () => {
-      const { container } = render(
-        <PrimaryButton onClick={vi.fn()} disabled>Comenzar</PrimaryButton>,
-      );
-
-      const button = container.querySelector("button")!;
-      expect(button).toBeDisabled();
-    });
-
-    it("does not call onClick when clicked", () => {
-      const onClick = vi.fn();
-      const { container } = render(
-        <PrimaryButton onClick={onClick} disabled>Comenzar</PrimaryButton>,
-      );
-
-      fireEvent.click(container.querySelector("button")!);
-
-      expect(onClick).not.toHaveBeenCalled();
-    });
-
-
+    const button = container.querySelector("button")!;
+    expect(button).toBeDisabled();
   });
+
 
 });

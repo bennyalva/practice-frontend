@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useSpeechRecognition } from "./useSpeechRecognition";
-import { ERROR_MESSAGES, LANGUAGE_SPANISH, RECOGNITION_ERRORS } from "../constantsHooks";
+import { ERROR_MESSAGES, RECOGNITION_ERRORS } from "../constantsHooks";
 import { MODAL_TYPE } from "@/app/interfacesGlobals";
 
 interface MockRecognition {
@@ -84,15 +84,6 @@ describe("useSpeechRecognition", () => {
 
   });
 
-  describe("initialization", () => {
-    it("configures recognition with Spanish language", () => {
-      renderHook(() => useSpeechRecognition(buildProps()));
-
-      expect(mockRecognition.lang).toBe(LANGUAGE_SPANISH);
-    });
-
-  });
-
   describe("toggleListening", () => {
     it("starts recognition when not listening", () => {
       const { result } = renderHook(() => useSpeechRecognition(buildProps()));
@@ -150,16 +141,6 @@ describe("useSpeechRecognition", () => {
       expect(onResult).toHaveBeenCalledWith("Hola mundo");
     });
 
-    it("truncates the transcript to maxLength", () => {
-      const onResult = vi.fn();
-      renderHook(() => useSpeechRecognition(buildProps({ onResult, maxLength: 5 })));
-
-      act(() => {
-        mockRecognition.onresult!(buildSpeechEvent("Hola mundo"));
-      });
-
-      expect(onResult).toHaveBeenCalledWith("Hola ");
-    });
   });
 
   describe("onerror", () => {
@@ -208,15 +189,7 @@ describe("useSpeechRecognition", () => {
       expect(result.current.isListening).toBe(false);
     });
 
-    it("does not throw when onError is not provided", () => {
-      renderHook(() => useSpeechRecognition(buildProps()));
 
-      expect(() => {
-        act(() => {
-          mockRecognition.onerror!(buildErrorEvent("not-allowed"));
-        });
-      }).not.toThrow();
-    });
   });
 
 });

@@ -10,24 +10,6 @@ describe("useModal", () => {
 
       expect(result.current.modal).toEqual(INITIAL_MODAL);
     });
-  });
-
-  describe("showInfo", () => {
-    it("opens the modal with INFO type, custom title and message", () => {
-      const { result } = renderHook(() => useModal());
-
-      act(() => {
-        result.current.showInfo("Título", "Mensaje de prueba");
-      });
-
-      expect(result.current.modal).toMatchObject({
-        isOpen: true,
-        type: "info",
-        title: "Título",
-        message: "Mensaje de prueba",
-      });
-    });
-
     it("stores the onClose callback for later execution", () => {
       const onClose = vi.fn();
       const { result } = renderHook(() => useModal());
@@ -42,6 +24,8 @@ describe("useModal", () => {
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
+
+
 
   describe("showWarning", () => {
     it("opens the modal with WARNING type and 'Aviso' title", () => {

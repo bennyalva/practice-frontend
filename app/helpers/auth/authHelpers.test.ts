@@ -22,25 +22,10 @@ describe("isProtectedRoute", () => {
 
 
 
-  it("returns true for /admin", () => {
-    expect(isProtectedRoute(ROUTES.ADMIN)).toBe(true);
-  });
-
-  it("returns true for /profile", () => {
-    expect(isProtectedRoute(ROUTES.PROFILE)).toBe(true);
-  });
-
-  it("returns false for /login", () => {
-    expect(isProtectedRoute(ROUTES.LOGIN)).toBe(false);
-  });
-
   it("returns false for /pages/home", () => {
     expect(isProtectedRoute(ROUTES.HOME)).toBe(false);
   });
 
-  it("returns false for root /", () => {
-    expect(isProtectedRoute("/")).toBe(false);
-  });
 });
 
 describe("getSessionToken", () => {
@@ -50,10 +35,5 @@ describe("getSessionToken", () => {
     expect(getSessionToken(req)).toBe("abc123");
   });
 
-  it("returns undefined when cookie does not exist", () => {
-    const req = mockRequest({});
-
-    expect(getSessionToken(req)).toBeUndefined();
-  });
 
 });

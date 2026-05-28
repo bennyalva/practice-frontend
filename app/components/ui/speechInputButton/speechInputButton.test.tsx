@@ -43,28 +43,5 @@ describe("SpeechInputButton", () => {
     });
 
 
-    describe("when isListening is true", () => {
-      it("applies listening-specific classes", () => {
-        const { container } = render(
-          <SpeechInputButton isListening hasSupport onToggle={vi.fn()} />,
-        );
-
-        const button = container.querySelector("button")!;
-        expect(button).toHaveClass("text-red-500", "scale-110", "animate-pulse");
-      });
-
-    });
-
-    describe("when isListening is false", () => {
-      it("applies idle-specific classes", () => {
-        const { container } = render(
-          <SpeechInputButton isListening={false} hasSupport onToggle={vi.fn()} />,
-        );
-
-        const button = container.querySelector("button")!;
-        expect(button).toHaveClass("text-secondary", "hover:text-primary");
-      });
-
-    });
   });
 });

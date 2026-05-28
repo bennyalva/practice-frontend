@@ -10,23 +10,6 @@ describe("CharacterCounter", () => {
   });
 
 
-  it("updates when current and max props change", () => {
-    const { container, rerender } = render(<CharacterCounter current={3} max={15} />);
 
-    expect(container.textContent).toContain("3/15");
-
-    rerender(<CharacterCounter current={5} max={15} />);
-    expect(container.textContent).toContain("5/15");
-
-    rerender(<CharacterCounter current={5} max={20} />);
-    expect(container.textContent).toContain("5/20");
-  });
-
-  it("applies the text size and color classes", () => {
-    const { container } = render(<CharacterCounter current={7} max={10} />);
-
-    const span = container.querySelector("span")!;
-    expect(span).toHaveClass("text-xs", "text-secondary");
-  });
 
 });

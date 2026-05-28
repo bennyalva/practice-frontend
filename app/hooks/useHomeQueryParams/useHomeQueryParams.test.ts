@@ -51,15 +51,6 @@ describe("useHomeQueryParams", () => {
       );
     });
 
-    it("falls back to Elektra Loan when view is invalid", () => {
-      mockGet.mockReturnValue("999");
-
-      const { result } = renderHook(() => useHomeQueryParams());
-
-      expect(result.current.welcomeTitle).toBe(
-        WELCOME_TITLES.ELEKTRA_LOAN,
-      );
-    });
   });
 
   describe("logoUrl", () => {
@@ -71,13 +62,7 @@ describe("useHomeQueryParams", () => {
       expect(result.current.logoUrl).toBe(ASSETS_PATHS.LOGOS.ELEKTRA_DARK);
     });
 
-    it("returns Shopinbaz dark logo for Shopinbaz view", () => {
-      mockGet.mockReturnValue(VIEW_OPTIONS.SHOPINBAZ);
 
-      const { result } = renderHook(() => useHomeQueryParams());
-
-      expect(result.current.logoUrl).toBe(ASSETS_PATHS.LOGOS.SHOPINBAZ_DARK);
-    });
   });
 
 

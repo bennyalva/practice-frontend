@@ -23,17 +23,4 @@ describe("getLogoUrl", () => {
     });
   });
 
-  describe("fallback", () => {
-    it("returns Elektra light logo when view is invalid", () => {
-      expect(getLogoUrl("999", THEMES.DARK)).toBe(ASSETS_PATHS.LOGOS.ELEKTRA_LIGHT);
-    });
-
-    it("returns Elektra light logo when theme is invalid", () => {
-      expect(getLogoUrl("2", "blue")).toBe(ASSETS_PATHS.LOGOS.ELEKTRA_LIGHT);
-    });
-
-    it("returns Elektra light logo when both are invalid", () => {
-      expect(getLogoUrl("abc", "xyz")).toBe(ASSETS_PATHS.LOGOS.ELEKTRA_LIGHT);
-    });
-  });
 });

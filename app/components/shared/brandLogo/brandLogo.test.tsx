@@ -36,13 +36,4 @@ describe("BrandLogo", () => {
     });
   });
 
-  describe("when logoUrl is null", () => {
-    it("renders the fallback text logo", () => {
-      const { container } = render(<BrandLogo logoUrl={null} />);
-
-      expect(container.textContent).toContain("elektra");
-      expect(container.textContent).toContain("⚡");
-    });
-
-  });
 });

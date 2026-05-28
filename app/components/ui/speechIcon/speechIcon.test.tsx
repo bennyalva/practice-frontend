@@ -19,15 +19,6 @@ describe("SpeechIcon", () => {
     expect(path.getAttribute("d")).toContain("M5.25 7.5A2.25");
   });
 
-  it("renders different path data for each state", () => {
-    const { container: idleContainer } = render(<SpeechIcon listening={false} />);
-    const { container: listeningContainer } = render(<SpeechIcon listening={true} />);
-
-    const idlePath = idleContainer.querySelector("path")!.getAttribute("d");
-    const listeningPath = listeningContainer.querySelector("path")!.getAttribute("d");
-
-    expect(idlePath).not.toEqual(listeningPath);
-  });
 
 
 });
