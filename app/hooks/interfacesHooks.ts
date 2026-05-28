@@ -1,4 +1,5 @@
-import { ModalType } from "../interfacesGlobals";
+import type { ModalType } from "../interfacesGlobals";
+
 
 export interface HomeQueryParamsResult {
   welcomeTitle: string;

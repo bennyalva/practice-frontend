@@ -1,3 +1,5 @@
+/// <reference types="dom-speech-recognition" />
+
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -12,7 +14,7 @@ export function useSpeechRecognition({
 }: UseSpeechRecognitionOptions): UseSpeechRecognitionResult {
   const [isListening, setIsListening] = useState(false);
   const [hasSupport, setHasSupport] = useState(false);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const onResultRef = useRef(onResult);
   const onErrorRef = useRef(onError);
   const maxLengthRef = useRef(maxLength);
@@ -23,26 +25,26 @@ export function useSpeechRecognition({
   maxLengthRef.current = maxLength;
 
   useEffect(() => {
-    const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
+    const SpeechRecognitionCtor =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
 
-    if (!SpeechRecognition) return;
+    if (!SpeechRecognitionCtor) return;
 
     setHasSupport(true);
-    const recognition = new SpeechRecognition();
+    const recognition = new SpeechRecognitionCtor();
 
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.lang = LANGUAGE_SPANISH;
 
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
       const speechToText = event.results[0][0].transcript;
       onResultRef.current(speechToText.slice(0, maxLengthRef.current));
 
     };
 
-    recognition.onerror = (event: any) => {
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
 
       if (event.error === RECOGNITION_ERRORS.NOT_ALLOWED) {
         onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.NOT_ALLOWED });
