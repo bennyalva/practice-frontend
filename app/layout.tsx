@@ -29,13 +29,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=new URLSearchParams(location.search);if(p.get("theme")==="light"){document.documentElement.classList.remove("dark")}}catch(e){}})()`,
-          }}
-        />
-      </head>
       <body className="min-h-full flex flex-col">
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
         {children}
