@@ -2,7 +2,8 @@
 
 import { InputFieldProps } from "../interfacesComponents";
 import { useSpeechRecognition } from "@/app/hooks/useSpeechRecognition/useSpeechRecognition";
-import SpeechIcon from "@/app/components/shared/icons/speechIcon";
+import { SpeechInputButton } from "./speechInputButton";
+import { CharacterCounter } from "./characterCounter";
 import { useEffect, useRef, useState } from "react";
 import { VALIDATION } from "@/app/constantsGlobals";
 
@@ -83,28 +84,18 @@ export const InputField = ({
             }`}
         />
 
-        {hasSupport && (
-          <button
-            type="button"
-            onClick={toggleListening}
-            className={`absolute right-2 p-1 rounded-full transition-all cursor-pointer duration-200 ${isListening
-              ? "text-red-500 scale-110 animate-pulse"
-              : "text-secondary hover:text-primary"
-              }`}
-            title="Dictar por voz"
-          >
-            <SpeechIcon listening={isListening} />
-          </button>
-        )}
+        <SpeechInputButton
+          isListening={isListening}
+          hasSupport={hasSupport}
+          onToggle={toggleListening}
+        />
       </div>
 
       <div className="flex justify-between items-center mt-1">
         <span className="text-xs text-red-500">
           {error}
         </span>
-        <span className="text-xs text-secondary">
-          {draft.length}/{maxLength} caracteres
-        </span>
+        <CharacterCounter current={draft.length} max={maxLength} />
       </div>
     </div>
   );
