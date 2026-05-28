@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { ModalType, MODAL_TYPE, ModalState } from "@/app/hooks/interfacesHooks";
+import { useRef, useState } from "react";
+import { ModalState } from "@/app/hooks/interfacesHooks";
 import { INITIAL_MODAL, TITLE_ERROR_GENERIC } from "@/app/constantsGlobals";
+import { MODAL_TYPE, ModalType } from "@/app/interfacesGlobals";
 
 export function useModal() {
   const [modal, setModal] = useState<ModalState>(INITIAL_MODAL);
+  const onCloseRef = useRef<(() => void) | undefined>(undefined);
 
-  const showInfo = (title: string, message: string) => {
+  const showInfo = (title: string, message: string, onClose?: () => void) => {
+    onCloseRef.current = onClose;
     setModal({ isOpen: true, type: MODAL_TYPE.INFO, title, message });
   };
 
@@ -24,6 +27,8 @@ export function useModal() {
   };
 
   const closeModal = () => {
+    onCloseRef.current?.();
+    onCloseRef.current = undefined;
     setModal((prev) => ({ ...prev, isOpen: false }));
   };
 

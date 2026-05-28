@@ -1,27 +1,38 @@
 "use client";
 
 import { BrandLogo } from "@/app/components/shared/brandLogo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { InputField } from "@/app/components/ui/inputField";
 import { PrimaryButton } from "@/app/components/ui/primaryButton";
 import { Modal } from "@/app/components/ui/modal";
 import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryParams";
-import { applyTheme } from "@/app/helpers/theme/themeHelpers";
-import { ASSETS_PATHS, VALIDATION } from "@/app/constantsGlobals";
+import { ASSETS_PATHS, GTM_EVENTS, VALIDATION } from "@/app/constantsGlobals";
 import { useModal } from "@/app/hooks/useModal/useModal";
+import { pushToDataLayer } from "@/app/libs/gtm/gtm";
+import { InputMethods } from "../interfacesPages";
 
 export function HomePageContent() {
-    const { logoUrl, welcomeTitle, theme, colorTitle } = useHomeQueryParams();
-
-    useEffect(() => {
-        applyTheme(theme);
-    }, [theme]);
+    const { logoUrl, welcomeTitle, colorTitle } = useHomeQueryParams();
 
     const [name, setName] = useState("");
+    const [inputKey, setInputKey] = useState(0);
     const { modal, showInfo, showByError, closeModal } = useModal();
 
+    const handleCommit = (value: string, method: InputMethods) => {
+        pushToDataLayer({
+            event: GTM_EVENTS.NAME_INPUT,
+            method,
+        });
+    };
+
     const handleStart = () => {
-        showInfo("¡Nombre registrado!", `Has ingresado: ${name}`);
+        pushToDataLayer({
+            event: GTM_EVENTS.NAME_DISPLAYED
+        });
+        showInfo("¡Nombre registrado!", `Has ingresado: ${name}`, () => {
+            setName("");
+            setInputKey((prev) => prev + 1);
+        });
     };
 
     return (
@@ -53,9 +64,11 @@ export function HomePageContent() {
 
                     <div className="w-full px-4 mt-4">
                         <InputField
+                            key={inputKey}
                             label="¿Cómo prefieres que te llamemos?"
                             value={name}
                             onChange={setName}
+                            onCommit={handleCommit}
                             maxLength={15}
                             placeholder="Escribe o dicta tu nombre..."
                             onSpeechError={showByError}

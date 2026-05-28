@@ -1,4 +1,4 @@
-import type { ModalType } from "@/app/hooks/interfacesHooks";
+import { ModalType } from "@/app/interfacesGlobals";
 import { ModalIconProps } from "../../interfacesComponents";
 
 const ICONS: Record<ModalType, { bg: string; icon: React.ReactNode }> = {

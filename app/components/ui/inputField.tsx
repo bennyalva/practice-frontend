@@ -2,8 +2,9 @@
 
 import { InputFieldProps } from "../interfacesComponents";
 import { useSpeechRecognition } from "@/app/hooks/useSpeechRecognition/useSpeechRecognition";
-import SpeechIcon from "@/app/components/shared/icons/speechIcon";
-import { useEffect, useState } from "react";
+import { SpeechInputButton } from "./speechInputButton";
+import { CharacterCounter } from "./characterCounter";
+import { useEffect, useRef, useState } from "react";
 import { VALIDATION } from "@/app/constantsGlobals";
 
 export const InputField = ({
@@ -13,9 +14,12 @@ export const InputField = ({
   maxLength,
   placeholder,
   onSpeechError,
+  onCommit,
 }: InputFieldProps) => {
   const [draft, setDraft] = useState(value);
   const [error, setError] = useState<string | null>(null);
+  const methodRef = useRef<'manual' | 'voice'>('manual');
+  const lastCommittedRef = useRef<string>('');
 
   // Sync internal draft when parent pushes a new value (voice commit, reset)
   useEffect(() => {
@@ -29,12 +33,17 @@ export const InputField = ({
       setError(`Mínimo ${VALIDATION.NAME_MIN_LENGTH} caracteres`);
     } else {
       setError(null);
+      if (trimmed !== lastCommittedRef.current) {
+        lastCommittedRef.current = trimmed;
+        onCommit?.(trimmed, methodRef.current);
+      }
     }
     onChange(trimmed);
   };
 
   const { isListening, hasSupport, toggleListening } = useSpeechRecognition({
     onResult: (speechValue) => {
+      methodRef.current = 'voice';
       setDraft(speechValue);
       validateAndCommit(speechValue);
     },
@@ -48,6 +57,7 @@ export const InputField = ({
   };
 
   const handleBlur = () => {
+    methodRef.current = 'manual';
     validateAndCommit(draft);
   };
 
@@ -74,28 +84,18 @@ export const InputField = ({
             }`}
         />
 
-        {hasSupport && (
-          <button
-            type="button"
-            onClick={toggleListening}
-            className={`absolute right-2 p-1 rounded-full transition-all duration-200 ${isListening
-              ? "text-red-500 scale-110 animate-pulse"
-              : "text-secondary hover:text-primary"
-              }`}
-            title="Dictar por voz"
-          >
-            <SpeechIcon listening={isListening} />
-          </button>
-        )}
+        <SpeechInputButton
+          isListening={isListening}
+          hasSupport={hasSupport}
+          onToggle={toggleListening}
+        />
       </div>
 
       <div className="flex justify-between items-center mt-1">
         <span className="text-xs text-red-500">
           {error}
         </span>
-        <span className="text-xs text-secondary">
-          {draft.length}/{maxLength} caracteres
-        </span>
+        <CharacterCounter current={draft.length} max={maxLength} />
       </div>
     </div>
   );
