@@ -1,4 +1,4 @@
-import SpeechIcon from "@/app/components/shared/icons/speechIcon";
+import SpeechIcon from "@/app/components/ui/speechIcon/speechIcon";
 
 interface SpeechInputButtonProps {
   isListening: boolean;
@@ -13,11 +13,10 @@ export const SpeechInputButton = ({ isListening, hasSupport, onToggle }: SpeechI
     <button
       type="button"
       onClick={onToggle}
-      className={`absolute right-2 p-1 rounded-full transition-all cursor-pointer duration-200 ${
-        isListening
-          ? "text-red-500 scale-110 animate-pulse"
-          : "text-secondary hover:text-primary"
-      }`}
+      className={`absolute right-2 p-1 rounded-full transition-all cursor-pointer duration-200 ${isListening
+        ? "text-red-500 scale-110 animate-pulse"
+        : "text-secondary hover:text-primary"
+        }`}
       title="Dictar por voz"
     >
       <SpeechIcon listening={isListening} />

@@ -1,15 +1,16 @@
 "use client";
 
-import { BrandLogo } from "@/app/components/shared/brandLogo";
+
 import { useState } from "react";
-import { InputField } from "@/app/components/ui/inputField";
-import { PrimaryButton } from "@/app/components/ui/primaryButton";
-import { Modal } from "@/app/components/ui/modal";
 import { useHomeQueryParams } from "@/app/hooks/useHomeQueryParams/useHomeQueryParams";
 import { ASSETS_PATHS, GTM_EVENTS, VALIDATION } from "@/app/constantsGlobals";
 import { useModal } from "@/app/hooks/useModal/useModal";
 import { pushToDataLayer } from "@/app/libs/gtm/gtm";
 import { InputMethods } from "../interfacesPages";
+import { BrandLogo } from "@/app/components/shared/brandLogo/brandLogo";
+import { InputField } from "@/app/components/ui/inputField/inputField";
+import { PrimaryButton } from "@/app/components/ui/primaryButton/primaryButton";
+import { Modal } from "@/app/components/shared/modals/modal";
 
 export function HomePageContent() {
     const { logoUrl, welcomeTitle, colorTitle } = useHomeQueryParams();

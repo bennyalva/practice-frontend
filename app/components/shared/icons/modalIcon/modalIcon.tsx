@@ -1,5 +1,5 @@
 import { ModalType } from "@/app/interfacesGlobals";
-import { ModalIconProps } from "../../interfacesComponents";
+import { ModalIconProps } from "../../../interfacesComponents";
 
 const ICONS: Record<ModalType, { bg: string; icon: React.ReactNode }> = {
   info: {

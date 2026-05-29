@@ -38,3 +38,8 @@ export interface ModalProps {
 export interface ModalIconProps {
   type: ModalType;
 }
+
+export interface CharacterCounterProps {
+  current: number;
+  max: number;
+}

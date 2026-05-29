@@ -1,8 +1,8 @@
 "use client";
 
 import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from "@headlessui/react";
-import { ModalIcon } from "@/app/components/shared/icons/modalIcon";
-import { ModalProps } from "../interfacesComponents";
+import { ModalIcon } from "@/app/components/shared/icons/modalIcon/modalIcon";
+import { ModalProps } from "../../interfacesComponents";
 
 export const Modal = ({ isOpen, onClose, title, message, type }: ModalProps) => {
   return (

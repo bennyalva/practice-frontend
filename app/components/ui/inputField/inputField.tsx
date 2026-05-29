@@ -1,11 +1,11 @@
 "use client";
 
-import { InputFieldProps } from "../interfacesComponents";
 import { useSpeechRecognition } from "@/app/hooks/useSpeechRecognition/useSpeechRecognition";
-import { SpeechInputButton } from "./speechInputButton";
-import { CharacterCounter } from "./characterCounter";
 import { useEffect, useRef, useState } from "react";
 import { VALIDATION } from "@/app/constantsGlobals";
+import { InputFieldProps } from "../../interfacesComponents";
+import { SpeechInputButton } from "../speechInputButton/speechInputButton";
+import { CharacterCounter } from "../characterCounter/characterCounter";
 
 export const InputField = ({
   label,
