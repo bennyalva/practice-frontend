@@ -9,5 +9,4 @@ export function pushToDataLayer(data: DataLayerObject): void {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(data);
-  console.log("[dataLayer]", data);
 }

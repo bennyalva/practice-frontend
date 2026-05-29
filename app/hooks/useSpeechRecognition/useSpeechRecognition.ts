@@ -107,11 +107,33 @@ export function useSpeechRecognition({
     } else {
       retryCountRef.current = 0;
       setIsListening(true);
-      try {
-        recognitionRef.current.start();
-      } catch (error) {
-        onErrorRef.current?.({ type: MODAL_TYPE.ERROR, message: ERROR_MESSAGES.ERROR_STARTING });
-        setIsListening(false);
+
+      const doStart = () => {
+        try {
+          recognitionRef.current?.start();
+        } catch {
+          onErrorRef.current?.({ type: MODAL_TYPE.ERROR, message: ERROR_MESSAGES.ERROR_STARTING });
+          setIsListening(false);
+        }
+      };
+
+      // Safari iOS requiere permiso de micrófono explícito antes de start().
+      // getUserMedia dispara el diálogo nativo de permiso; una vez concedido,
+      // SpeechRecognition ya no recibe SERVICE_NOT_ALLOWED.
+      if (navigator.mediaDevices?.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then((stream) => {
+            // Liberamos el stream inmediatamente; solo necesitábamos el permiso.
+            stream.getTracks().forEach((track) => track.stop());
+            doStart();
+          })
+          .catch(() => {
+            onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.NOT_ALLOWED });
+            setIsListening(false);
+          });
+      } else {
+        doStart();
       }
     }
   }, [isListening]);
