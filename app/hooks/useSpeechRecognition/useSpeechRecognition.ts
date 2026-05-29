@@ -18,6 +18,7 @@ export function useSpeechRecognition({
   const onResultRef = useRef(onResult);
   const onErrorRef = useRef(onError);
   const maxLengthRef = useRef(maxLength);
+  const retryCountRef = useRef(0);
 
   // Mantener refs actualizadas sin disparar re-renders
   onResultRef.current = onResult;
@@ -58,6 +59,30 @@ export function useSpeechRecognition({
         return;
       }
 
+      if (event.error === RECOGNITION_ERRORS.ABORTED) {
+        // iOS: el diálogo de permiso invalida el primer start().
+        // Reintentamos una vez automáticamente.
+        if (retryCountRef.current < 1) {
+          retryCountRef.current += 1;
+          try {
+            recognitionRef.current?.start();
+          } catch {
+            onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.ABORTED });
+            setIsListening(false);
+          }
+          return;
+        }
+        onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.ABORTED });
+        setIsListening(false);
+        return;
+      }
+
+      if (event.error === RECOGNITION_ERRORS.SERVICE_NOT_ALLOWED) {
+        onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.SERVICE_NOT_ALLOWED });
+        setIsListening(false);
+        return;
+      }
+
       onErrorRef.current?.({ type: MODAL_TYPE.ERROR, message: ERROR_MESSAGES.DEFAULT });
       setIsListening(false);
     };
@@ -80,6 +105,7 @@ export function useSpeechRecognition({
     if (isListening) {
       recognitionRef.current.stop();
     } else {
+      retryCountRef.current = 0;
       setIsListening(true);
       try {
         recognitionRef.current.start();
