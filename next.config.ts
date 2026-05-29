@@ -7,10 +7,11 @@ const cspHeader = `
   img-src 'self' blob: data: https://www.google-analytics.com https://*.google-analytics.com;
   font-src 'self';
   connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com;
+  frame-src 'self';
+  frame-ancestors 'self' https://app.netlify.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
-  frame-ancestors 'none';
   upgrade-insecure-requests;
 `.replace(/\s{2,}/g, ' ').trim();
 
@@ -35,10 +36,6 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             value: cspHeader,
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY', // Evita que tu sitio web sea embebido en iFrames (mitiga Clickjacking)
           },
           {
             key: 'X-Content-Type-Options',
