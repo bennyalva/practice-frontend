@@ -4,9 +4,9 @@ const cspHeader = `
   default-src 'self';
   script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' blob: data: https://www.google-analytics.com https://*.google-analytics.com;
+  img-src 'self' blob: data: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com;
   font-src 'self';
-  connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com;
+  connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com;
   frame-src 'self' https://app.netlify.com;
   frame-ancestors 'self' https://app.netlify.com;
   object-src 'none';
