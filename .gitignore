@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# sonar
+sonar-project.properties
+/.scannerwork/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
