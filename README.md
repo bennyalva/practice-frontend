@@ -82,9 +82,14 @@ Registro de decisiones técnicas tomadas durante el desarrollo.
   - Ahorro en disco por eficiencia de manejar libreias
   - Nos permite agregar una capa de seguridad por ejemplo bloquear la ejecución automática de scripts, validar que los paquetes no se hayan publicando recientemente el recomendado es esperar 72 horas mínimo 
 
-  ### uso de API voz 
+  ### Web Speech API nativa
+react-speech-recognition
+  **Descripción**: Es mejor usar la Api nativa del navegador porque actualmente hay errores al agregar otras librerias como por ejemplo react-speech-recognition que necesita de otras dependencias pero aún asi no aseguran el correcto funcionamiento. He realizado algunas pruebas con Chrome en IOS y esta funcionando bien, solo hay unos temas en safari pero por tiempos no me dio tiempo hacer mas pruebas e investigacion, pero con el Api nativa estamos teniendo buenos resultado hasta el momento.
 
-  **Descripción**:
+  **Puntos a considerar**:
+  - Validar si porque la aplicacion esta desplegada en netlify y nos embebe en un iframe
+  - revisar configuraciones de los telefono para ver si algo esta denegando el servicio de dictado
+
 
   ### vitest para prueba unitarias 
 

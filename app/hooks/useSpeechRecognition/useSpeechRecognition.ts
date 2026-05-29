@@ -19,6 +19,7 @@ export function useSpeechRecognition({
   const onErrorRef = useRef(onError);
   const maxLengthRef = useRef(maxLength);
   const retryCountRef = useRef(0);
+  const micPermissionRef = useRef(false);
 
   // Mantener refs actualizadas sin disparar re-renders
   onResultRef.current = onResult;
@@ -78,7 +79,13 @@ export function useSpeechRecognition({
       }
 
       if (event.error === RECOGNITION_ERRORS.SERVICE_NOT_ALLOWED) {
-        onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.SERVICE_NOT_ALLOWED });
+        // Si ya tenemos permiso del micrófono, Safari rechazó start() por
+        // no ejecutarse desde user gesture. Pedimos un segundo toque.
+        if (micPermissionRef.current) {
+          onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.ABORTED });
+        } else {
+          onErrorRef.current?.({ type: MODAL_TYPE.WARNING, message: ERROR_MESSAGES.SERVICE_NOT_ALLOWED });
+        }
         setIsListening(false);
         return;
       }
@@ -117,15 +124,23 @@ export function useSpeechRecognition({
         }
       };
 
-      // Safari iOS requiere permiso de micrófono explícito antes de start().
-      // getUserMedia dispara el diálogo nativo de permiso; una vez concedido,
-      // SpeechRecognition ya no recibe SERVICE_NOT_ALLOWED.
+      // Si ya tenemos permiso de micrófono (Safari segunda vez),
+      // llamamos start() directamente desde el user gesture.
+      if (micPermissionRef.current) {
+        doStart();
+        return;
+      }
+
+      // Primera vez: solicitamos permiso con getUserMedia.
+      // En Chrome esto dispara el diálogo y start() funciona desde el .then().
+      // En Safari, start() en .then() pierde el user gesture y puede fallar
+      // con service-not-allowed; el usuario deberá tocar una segunda vez.
       if (navigator.mediaDevices?.getUserMedia) {
         navigator.mediaDevices
           .getUserMedia({ audio: true })
           .then((stream) => {
-            // Liberamos el stream inmediatamente; solo necesitábamos el permiso.
             stream.getTracks().forEach((track) => track.stop());
+            micPermissionRef.current = true;
             doStart();
           })
           .catch(() => {
