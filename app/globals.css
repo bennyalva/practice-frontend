@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
+@theme {
+  /* se quita la primer palabra de cada variable para que no se repita
+    por la configuracion que tiene tailwind entonces 
+    --color-app: var(--bg-app); quedaria para su uso como:
+     "bg-app" clase css para el fondo de la app, y asi con las demas variables
+    */
+  --color-app: var(--bg-app); 
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-brand-color: var(--brand-color);
+  
+  --color-cards: var(--input-cards);
+  --color-border: var(--input-border);
+  
+  /* Botones */
+  --color-disabled-bg: var(--btn-disabled-bg);
+  --color-disabled-text: var(--btn-disabled);
+  --color-active-bg: var(--btn-active-bg);
+  --color-active-bg-hover: var(--btn-active-bg-hover);
+  --color-active-text: var(--btn-active-text);
+
+  /* Títulos por vista */
+  --color-title-elektra: var(--title-elektra-color);
+  --color-title-shopinbaz: var(--title-shopinbaz-color);
+}
+
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-app: #F9F9F9;
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --brand-color: #D12016;
+  --input-cards: #FFFFFF;
+  --input-border: #E0E0E0;
+  --btn-disabled-bg: #E0E0E0;
+  --btn-disabled-text: #A0A0A0;
+  --btn-active-bg: #272725;
+  --btn-active-bg-hover: #3d3d3b;
+  --btn-active-text: #FFFFFF;
+  --title-elektra-color: #D12016;
+  --title-shopinbaz-color: #ac25eb;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+.dark {
+  --bg-app: #121212;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --brand-color: #E1251B;
+  --input-cards: #1E1E1E;
+  --input-border: #333333;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  
+  --btn-disabled-bg: #877e7e;
+  --btn-disabled-text: #584f4f;
+  --btn-active-bg: #e6e6e4;
+  --btn-active-bg-hover: #cfcfcd;
+  --btn-active-text: #000000;
+  --title-elektra-color: #E1251B;
+  --title-shopinbaz-color: #d274f2;
 }
