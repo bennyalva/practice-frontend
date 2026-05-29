@@ -26,8 +26,10 @@ const nextConfig: NextConfig = {
   // Deshabilita el encabezado que expone que estás usando Next.js para mitigar el reconocimiento de huella tecnológica (Fingerprinting)
   poweredByHeader: false,
 
-  // Inyección de Cabeceras de Seguridad HTTP obligatorias
+  // Inyección de Cabeceras de Seguridad HTTP obligatorias (solo en producción)
   async headers() {
+    if (process.env.NODE_ENV !== 'production') return [];
+
     return [
       {
         // Aplica estas cabeceras a todas las rutas de la aplicación

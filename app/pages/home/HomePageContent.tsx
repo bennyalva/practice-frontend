@@ -39,9 +39,9 @@ export function HomePageContent() {
     return (
         <div
             className="min-h-screen w-full flex items-center justify-center
-                      bg-app px-4 py-4 transition-colors duration-300"
+                      bg-app px-4 py-1 transition-colors duration-300"
         >
-            <div className="w-full max-w-md max-h-[800px] flex flex-col justify-between overflow-y-auto">
+            <div className="w-full max-w-md max-h-[700px] flex flex-col justify-between overflow-y-auto">
                 <header>
                     <BrandLogo logoUrl={logoUrl} altText="Logo" />
                 </header>
