@@ -7,7 +7,7 @@ const cspHeader = `
   img-src 'self' blob: data: https://www.google-analytics.com https://*.google-analytics.com;
   font-src 'self';
   connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com;
-  frame-src 'self';
+  frame-src 'self' https://app.netlify.com;
   frame-ancestors 'self' https://app.netlify.com;
   object-src 'none';
   base-uri 'self';
